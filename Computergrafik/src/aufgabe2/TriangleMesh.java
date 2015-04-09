@@ -20,9 +20,6 @@ import computergraphics.math.Vector3;
  */
 public class TriangleMesh implements ITriangleMesh {
 
-	private int numberOfTriangles = 0;
-	private int numberOfVertices = 0;
-
 	private List<Triangle> triangles = new ArrayList<Triangle>();
 	private List<Vertex> vertices = new ArrayList<Vertex>();
 
@@ -31,15 +28,13 @@ public class TriangleMesh implements ITriangleMesh {
 
 		calculateNormalVector(t);
 		triangles.add(t);
-		numberOfTriangles++;
 	}
 
 	@Override
 	public int addVertex(Vertex v) {
 
 		vertices.add(v);
-		numberOfVertices++;
-		return numberOfVertices - 1;
+		return vertices.size() - 1;
 	}
 
 	/**
@@ -50,24 +45,22 @@ public class TriangleMesh implements ITriangleMesh {
 	 */
 	public void calculateNormalVector(Triangle t) {
 
-		Vertex a = vertices.get(t.getA());
-		Vertex b = vertices.get(t.getB());
-		Vertex c = vertices.get(t.getC());
-		Vector3 ab = b.getPosition().subtract(a.getPosition());
-		Vector3 ac = c.getPosition().subtract(a.getPosition());
-		Vector3 normal = ab.cross(ac);
-		normal.normalize();
-		t.setNormal(normal);
+		Vector3 a = vertices.get(t.getA()).getPosition();
+		Vector3 b = vertices.get(t.getB()).getPosition();
+		Vector3 c = vertices.get(t.getC()).getPosition();
+		Vector3 ab = b.subtract(a);
+		Vector3 ac = c.subtract(a);
+		t.setNormal(ab.cross(ac).getNormalized());
 	}
 
 	@Override
 	public int getNumberOfTriangles() {
-		return numberOfTriangles;
+		return triangles.size();
 	}
 
 	@Override
 	public int getNumberOfVertices() {
-		return numberOfVertices;
+		return vertices.size();
 	}
 
 	@Override

@@ -8,7 +8,6 @@ package aufgabe2;
 
 import com.jogamp.opengl.GL2;
 import computergraphics.datastructures.ITriangleMesh;
-import computergraphics.datastructures.ObjIO;
 import computergraphics.datastructures.Triangle;
 import computergraphics.datastructures.Vertex;
 import computergraphics.math.Vector3;
@@ -20,8 +19,6 @@ import computergraphics.scenegraph.Node;
 public class TriangleMeshNode extends Node {
 
 	private ITriangleMesh triangleMesh;
-	private ObjIO objIO;
-	private String cowPath = "resources/cow.obj";
 
 	/**
 	 * Index for the display list that consists of the {@link Triangle}s.
@@ -30,11 +27,11 @@ public class TriangleMeshNode extends Node {
 
 	/**
 	 * Constructor.
+	 * 
+	 * @param triangleMesh2
 	 */
-	public TriangleMeshNode() {
-		triangleMesh = new TriangleMesh();
-		objIO = new ObjIO();
-		objIO.einlesen(cowPath, triangleMesh);
+	public TriangleMeshNode(ITriangleMesh triangleMesh) {
+		this.triangleMesh = triangleMesh;
 	}
 
 	@Override
@@ -51,7 +48,8 @@ public class TriangleMeshNode extends Node {
 	/**
 	 * Initializes the display list that consists of the {@link Triangle}s.
 	 * 
-	 * @param gl needed to draw
+	 * @param gl
+	 *            needed to draw
 	 */
 	private void init(GL2 gl) {
 

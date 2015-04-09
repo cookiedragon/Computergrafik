@@ -6,6 +6,8 @@
  */
 package aufgabe2;
 
+import computergraphics.datastructures.ITriangleMesh;
+import computergraphics.datastructures.ObjIO;
 import computergraphics.framework.AbstractCGFrame;
 import computergraphics.math.Vector3;
 import computergraphics.scenegraph.ScaleNode;
@@ -25,6 +27,11 @@ public class Aufgabe2 extends AbstractCGFrame {
 	private static final long serialVersionUID = 4257130065274995543L;
 
 	/**
+	 * Path to the .obj that stores a model of a cow.
+	 */
+	private String cowPath = "resources/cow.obj";
+	
+	/**
 	 * Constructor.
 	 */
 	public Aufgabe2(int timerInverval) {
@@ -32,7 +39,11 @@ public class Aufgabe2 extends AbstractCGFrame {
 		ShaderNode colorNode = new ShaderNode();
 		getRoot().addChild(colorNode);
 
-		TriangleMeshNode triangleMeshNode = new TriangleMeshNode();
+		ITriangleMesh triangleMesh = new TriangleMesh();
+		ObjIO objIO = new ObjIO();
+		objIO.einlesen(cowPath, triangleMesh);
+		
+		TriangleMeshNode triangleMeshNode = new TriangleMeshNode(triangleMesh);
 		double factor = 6.0;
 		ScaleNode scale = new ScaleNode(new Vector3(factor, factor, factor));
 		colorNode.addChild(scale);

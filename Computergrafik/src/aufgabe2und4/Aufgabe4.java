@@ -1,13 +1,17 @@
-package aufgabe2;
+/**
+ * Praktikum AI WP Computergrafik, SS 2015
+ * Gruppe:	Corinna Klaukin (corinna.klaukin@haw-hamburg.de)
+ * 			Anna Steinhauer (annachristin.steinhauer@haw-hamburg.de)
+ * Aufgabe: Aufgabenblatt 4
+ */
+package aufgabe2und4;
 
 import computergraphics.datastructures.ITriangleMesh;
 import computergraphics.datastructures.ObjIO;
 import computergraphics.framework.AbstractCGFrame;
-import computergraphics.math.Vector3;
-import computergraphics.scenegraph.ScaleNode;
 import computergraphics.scenegraph.ShaderNode;
 
-public class Aufgabe2 extends AbstractCGFrame {
+public class Aufgabe4 extends AbstractCGFrame {
 
 	/**
 	 * 
@@ -15,29 +19,25 @@ public class Aufgabe2 extends AbstractCGFrame {
 	private static final long serialVersionUID = 4257130065274995543L;
 
 	/**
-	 * Path to the .obj that stores a model of a cow.
+	 * Path to the .obj that stores a model of a cube.
 	 */
-	private String cowPath = "resources/cow.obj";
+	private String cubePath = "meshes/cube.obj";
 
 	/**
 	 * Constructor.
 	 */
-	public Aufgabe2(int timerInverval) {
+	public Aufgabe4(int timerInverval) {
 		super(timerInverval);
 		ShaderNode colorNode = new ShaderNode();
 		getRoot().addChild(colorNode);
 
 		ITriangleMesh triangleMesh = new TriangleMesh();
 		ObjIO objIO = new ObjIO();
-		objIO.einlesen(cowPath, triangleMesh);
+		objIO.einlesen(cubePath, triangleMesh);
 
-		// build the cow
+		// build the cube
 		TriangleMeshNode triangleMeshNode = new TriangleMeshNode(triangleMesh);
-		double factor = 6;
-		ScaleNode cowScale = new ScaleNode(new Vector3(factor, factor, factor));
-		colorNode.addChild(cowScale);
-		cowScale.addChild(triangleMeshNode);
-
+		colorNode.addChild(triangleMeshNode);
 	}
 
 	/*
@@ -54,6 +54,6 @@ public class Aufgabe2 extends AbstractCGFrame {
 	 * Program entry point.
 	 */
 	public static void main(String[] args) {
-		new Aufgabe2(1000);
+		new Aufgabe4(1000);
 	}
 }

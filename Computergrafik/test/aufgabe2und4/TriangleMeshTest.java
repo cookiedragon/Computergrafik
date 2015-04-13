@@ -1,10 +1,11 @@
-package aufgabe2;
+package aufgabe2und4;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import aufgabe2und4.TriangleMesh;
 import computergraphics.datastructures.Triangle;
 import computergraphics.datastructures.Vertex;
 import computergraphics.math.Vector3;

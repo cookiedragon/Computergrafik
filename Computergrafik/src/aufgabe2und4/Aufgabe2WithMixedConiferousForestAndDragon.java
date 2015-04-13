@@ -4,7 +4,7 @@
  * 			Anna Steinhauer (annachristin.steinhauer@haw-hamburg.de)
  * Aufgabe: Aufgabenblatt 2
  */
-package aufgabe2;
+package aufgabe2und4;
 
 import java.util.ArrayList;
 import java.util.List;

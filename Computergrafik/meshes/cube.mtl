@@ -1,5 +1,2 @@
-#
-#
-newmtl cube_material
-map_Kd logo_haw.png
-
+newmtl default_material
+map_Kd mario.png

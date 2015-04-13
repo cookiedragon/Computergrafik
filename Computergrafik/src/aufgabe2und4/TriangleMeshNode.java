@@ -4,7 +4,7 @@
  * 			Anna Steinhauer (annachristin.steinhauer@haw-hamburg.de)
  * Aufgabe: Aufgabenblatt 2
  */
-package aufgabe2;
+package aufgabe2und4;
 
 import com.jogamp.opengl.GL2;
 import computergraphics.datastructures.ITriangleMesh;
@@ -23,12 +23,12 @@ public class TriangleMeshNode extends Node {
 	/**
 	 * Index for the display list that consists of the {@link Triangle}s.
 	 */
-	private int triangleList = -1;
+	private int triangleDisplayList = -1;
 
 	/**
 	 * Constructor.
 	 * 
-	 * @param triangleMesh2
+	 * @param triangleMesh
 	 */
 	public TriangleMeshNode(ITriangleMesh triangleMesh) {
 		this.triangleMesh = triangleMesh;
@@ -37,10 +37,10 @@ public class TriangleMeshNode extends Node {
 	@Override
 	public void drawGl(GL2 gl) {
 
-		if (triangleList == -1) {
+		if (triangleDisplayList == -1) {
 			init(gl);
 		}
-		gl.glCallList(triangleList);
+		gl.glCallList(triangleDisplayList);
 		gl.glPopMatrix();
 		gl.glFlush();
 	}
@@ -53,8 +53,8 @@ public class TriangleMeshNode extends Node {
 	 */
 	private void init(GL2 gl) {
 
-		triangleList = gl.glGenLists(1);
-		gl.glNewList(triangleList, GL2.GL_COMPILE);
+		triangleDisplayList = gl.glGenLists(1);
+		gl.glNewList(triangleDisplayList, GL2.GL_COMPILE);
 		gl.glColor3d(1.0, 0.0, 0.8);
 		gl.glBegin(GL2.GL_TRIANGLES);
 

@@ -18,6 +18,9 @@ import computergraphics.scenegraph.Node;
  */
 public class TriangleMeshNode extends Node {
 
+	/**
+	 * The {@link ITriangleMesh} that holds the data.
+	 */
 	private ITriangleMesh triangleMesh;
 
 	/**

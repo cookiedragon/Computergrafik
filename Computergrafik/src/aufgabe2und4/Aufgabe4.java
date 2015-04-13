@@ -23,6 +23,8 @@ public class Aufgabe4 extends AbstractCGFrame {
 	 */
 	private String cubePath = "meshes/cube.obj";
 
+	private String texturePath = "meshes/mario.png";
+
 	/**
 	 * Constructor.
 	 */
@@ -36,7 +38,8 @@ public class Aufgabe4 extends AbstractCGFrame {
 		objIO.einlesen(cubePath, triangleMesh);
 
 		// build the cube
-		TriangleMeshNode triangleMeshNode = new TriangleMeshNode(triangleMesh);
+		TriangleTextureMeshNode triangleMeshNode = new TriangleTextureMeshNode(
+				triangleMesh, texturePath);
 		colorNode.addChild(triangleMeshNode);
 	}
 

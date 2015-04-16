@@ -93,8 +93,8 @@ public class Aufgabe1 extends AbstractCGFrame {
 		Dinofly dragon = new Dinofly();
 		ScaleNode scaleDragon = new ScaleNode(new Vector3(0.2, 0.2, 0.2));
 		dragonFlyNode = new RotationNode(yAxis, angle);
-		TranslationNode tNode = new TranslationNode(new Vector3(-(squareWidth * 0.5) ,
-				-2.0, 0.0));
+		TranslationNode tNode = new TranslationNode(new Vector3(
+				-(squareWidth * 0.5), -2.0, 0.0));
 		colorNode.addChild(scaleDragon);
 		scaleDragon.addChild(dragonFlyNode);
 		dragonFlyNode.addChild(tNode);
@@ -114,14 +114,16 @@ public class Aufgabe1 extends AbstractCGFrame {
 	protected void timerTick() {
 		System.out.println("Tick");
 
-		angle = angle + 30.0f;
-		dragonFlyNode.setAngle(angle);
+		angle = angle + 1.0f;
+		if (dragonFlyNode != null) {
+			dragonFlyNode.setAngle(angle);
+		}
 	}
 
 	/**
 	 * Program entry point.
 	 */
 	public static void main(String[] args) {
-		new Aufgabe1(1000);
+		new Aufgabe1(100);
 	}
 }

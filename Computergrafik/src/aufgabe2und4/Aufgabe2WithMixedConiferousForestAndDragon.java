@@ -127,14 +127,16 @@ public class Aufgabe2WithMixedConiferousForestAndDragon extends AbstractCGFrame 
 	protected void timerTick() {
 		System.out.println("Tick");
 
-		angle = angle + 30.0f;
-		dragonFlyNode.setAngle(angle);
+		angle = angle + 1.0f;
+		if (dragonFlyNode != null) {
+			dragonFlyNode.setAngle(angle);
+		}
 	}
 
 	/**
 	 * Program entry point.
 	 */
 	public static void main(String[] args) {
-		new Aufgabe2WithMixedConiferousForestAndDragon(1000);
+		new Aufgabe2WithMixedConiferousForestAndDragon(100);
 	}
 }

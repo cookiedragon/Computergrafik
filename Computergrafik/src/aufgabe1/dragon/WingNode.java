@@ -47,9 +47,9 @@ public class WingNode extends Node {
 
 		// update vertex
 		if (up) {
-			z3 = z3 + 0.1f;
+			z3 = z3 + 0.3f;
 		} else {
-			z3 = z3 - 0.1f;
+			z3 = z3 - 0.3f;
 		}
 		if (z3 <= lowest || z3 >= uppest) {
 			up = !up;

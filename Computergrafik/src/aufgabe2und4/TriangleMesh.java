@@ -34,7 +34,7 @@ public class TriangleMesh implements ITriangleMesh {
 	/**
 	 * The filename of the used texture.
 	 */
-	private String textureFileName;
+	private String textureFileName = null;
 	/**
 	 * List of the texture coordinates in this mesh.
 	 */

@@ -29,7 +29,6 @@ public class ImplicitSuperquadric implements ImplicitFunction {
 		double x = vertex.get(0) - center.get(0);
 		double y = vertex.get(1) - center.get(0);
 		double z = vertex.get(2) - center.get(0);
-
 		double cuboid = Math.pow(x, 10) + Math.pow(y, 10) + Math.pow(z, 10);
 		return cuboid;
 	}

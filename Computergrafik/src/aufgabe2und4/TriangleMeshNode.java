@@ -8,11 +8,13 @@ package aufgabe2und4;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLException;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureIO;
+
 import computergraphics.datastructures.ITriangleMesh;
 import computergraphics.datastructures.Triangle;
 import computergraphics.datastructures.Vertex;
@@ -133,6 +135,12 @@ public class TriangleMeshNode extends Node {
 					Vector3 tc = triangleMesh.getTextureCoordinate(triangle
 							.getTextureCoordinate(j));
 					gl.glTexCoord2d(tc.get(0), tc.get(1));
+				} else {
+					if (!hasTexture) {
+						Random r = new Random();
+						gl.glColor3d(r.nextDouble(), r.nextDouble(),
+								r.nextDouble());
+					}
 				}
 				Vertex v = triangleMesh.getVertex(triangle.get(j));
 				gl.glVertex3d(v.getPosition().get(0), v.getPosition().get(1), v

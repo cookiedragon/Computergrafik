@@ -29,13 +29,17 @@ public class Aufgabe3 extends AbstractCGFrame {
 		Vector3 center = new Vector3(0.0, 0.0, 0.0);
 		double radius = 1.0;
 		ImplicitSphere sphere = new ImplicitSphere(radius, center);
-		
+
 		// get a torus
 		double innerRadius = 0.5;
 		double outerRadius = 1.0;
-		ImplicitTorus torus = new ImplicitTorus(innerRadius, outerRadius, center);
-		
-		ImplicitNode implicitNode = new ImplicitNode(torus);
+		ImplicitTorus torus = new ImplicitTorus(innerRadius, outerRadius,
+				center);
+
+		// get a superquadric
+		ImplicitSuperquadric superquadric = new ImplicitSuperquadric(center);
+
+		ImplicitNode implicitNode = new ImplicitNode(superquadric);
 		colorNode.addChild(implicitNode);
 	}
 

@@ -35,7 +35,7 @@ public class Aufgabe3 extends AbstractCGFrame {
 		double outerRadius = 1.0;
 		ImplicitTorus torus = new ImplicitTorus(innerRadius, outerRadius, center);
 		
-		ImplicitNode implicitNode = new ImplicitNode(sphere);
+		ImplicitNode implicitNode = new ImplicitNode(torus);
 		colorNode.addChild(implicitNode);
 	}
 

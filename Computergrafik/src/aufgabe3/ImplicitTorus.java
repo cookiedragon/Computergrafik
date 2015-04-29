@@ -35,8 +35,8 @@ public class ImplicitTorus implements ImplicitFunction {
 		double xSqr = Math.pow(vertex.get(0) - center.get(0), 2);
 		double ySqr = Math.pow(vertex.get(1) - center.get(1), 2);
 		double zSqr = Math.pow(vertex.get(2) - center.get(2), 2);
-		double RSqr = Math.pow(innerRadius, 2);
-		double rSqr = Math.pow(outerRadius, 2);
+		double RSqr = Math.pow(outerRadius, 2);
+		double rSqr = Math.pow(innerRadius, 2);
 		double first = Math.pow((xSqr + ySqr + zSqr + RSqr - rSqr), 2);
 		double second = 4 * RSqr * (xSqr + ySqr);
 		return first - second;
@@ -44,10 +44,10 @@ public class ImplicitTorus implements ImplicitFunction {
 
 	@Override
 	public Cube getBoundingBox() {
-		
+
 		List<Vector3> boundingBox = new ArrayList<Vector3>();
 
-		double puffer = outerRadius + 0.1;
+		double puffer = outerRadius + (outerRadius - innerRadius) + 0.1;
 
 		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
 				- puffer, center.get(2) - puffer));

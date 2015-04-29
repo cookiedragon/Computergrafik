@@ -6,27 +6,22 @@
  */
 package aufgabe3;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import computergraphics.math.Vector3;
 
 /**
  * This is an {@link ImplicitFunction} which describes a torus.
  */
-public class ImplicitTorus implements ImplicitFunction {
+public class ImplicitTorus extends ImplicitFunction {
 
 	private double innerRadius;
 	private double outerRadius;
-	private Vector3 center;
-	private double iso = 0.0;
 
-	public ImplicitTorus(double radiusInnen, double radiusAussen,
-			Vector3 mittelPunkt) {
-		super();
-		this.innerRadius = radiusInnen;
-		this.outerRadius = radiusAussen;
-		this.center = mittelPunkt;
+	public ImplicitTorus(double innerRadius, double outerRadius, Vector3 center) {
+		this.innerRadius = innerRadius;
+		this.outerRadius = outerRadius;
+		this.center = center;
+
+		boundingBoxRadius = outerRadius + (outerRadius - innerRadius) + 0.1;
 	}
 
 	@Override
@@ -41,38 +36,4 @@ public class ImplicitTorus implements ImplicitFunction {
 		double second = 4 * RSqr * (xSqr + ySqr);
 		return first - second;
 	}
-
-	@Override
-	public Cube getBoundingBox() {
-
-		List<Vector3> boundingBox = new ArrayList<Vector3>();
-
-		double puffer = outerRadius + (outerRadius - innerRadius) + 0.1;
-
-		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
-				- puffer, center.get(2) - puffer));
-		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
-				- puffer, center.get(2) - puffer));
-		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
-				+ puffer, center.get(2) - puffer));
-		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
-				+ puffer, center.get(2) - puffer));
-
-		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
-				- puffer, center.get(2) + puffer));
-		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
-				- puffer, center.get(2) + puffer));
-		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
-				+ puffer, center.get(2) + puffer));
-		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
-				+ puffer, center.get(2) + puffer));
-
-		return new Cube(boundingBox);
-	}
-
-	@Override
-	public double getIso() {
-		return iso;
-	}
-
 }

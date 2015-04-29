@@ -6,23 +6,20 @@
  */
 package aufgabe3;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import computergraphics.math.Vector3;
 
 /**
  * This is an {@link ImplicitFunction} which describes a sphere.
  */
-public class ImplicitSphere implements ImplicitFunction {
+public class ImplicitSphere extends ImplicitFunction {
 
 	private double radius;
-	private Vector3 center;
-	private double iso = 0.0;
 
 	public ImplicitSphere(double radius, Vector3 mittelPunkt) {
 		this.radius = radius;
 		this.center = mittelPunkt;
+
+		boundingBoxRadius = radius + 0.1;
 	}
 
 	@Override
@@ -34,38 +31,4 @@ public class ImplicitSphere implements ImplicitFunction {
 		double rSqr = Math.pow(radius, 2);
 		return xSqr + ySqr + zSqr - rSqr;
 	}
-
-	@Override
-	public Cube getBoundingBox() {
-
-		List<Vector3> boundingBox = new ArrayList<Vector3>();
-
-		double puffer = radius + 0.1;
-
-		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
-				- puffer, center.get(2) - puffer));
-		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
-				- puffer, center.get(2) - puffer));
-		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
-				+ puffer, center.get(2) - puffer));
-		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
-				+ puffer, center.get(2) - puffer));
-
-		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
-				- puffer, center.get(2) + puffer));
-		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
-				- puffer, center.get(2) + puffer));
-		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
-				+ puffer, center.get(2) + puffer));
-		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
-				+ puffer, center.get(2) + puffer));
-
-		return new Cube(boundingBox);
-	}
-
-	@Override
-	public double getIso() {
-		return iso;
-	}
-
 }

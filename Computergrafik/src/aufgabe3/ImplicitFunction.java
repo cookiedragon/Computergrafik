@@ -6,13 +6,20 @@
  */
 package aufgabe3;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import computergraphics.math.Vector3;
 
 /**
  * This represents an implicit function, which describes a mathematically
  * describable object.
  */
-public interface ImplicitFunction {
+public abstract class ImplicitFunction {
+
+	protected double iso = 0.0;
+	protected Vector3 center;
+	protected double boundingBoxRadius = 1.1;
 
 	/**
 	 * Calculates the iso value for a given vertex.
@@ -21,7 +28,7 @@ public interface ImplicitFunction {
 	 *            the vertex
 	 * @return the calculated iso value
 	 */
-	double getIsoValueFor(Vector3 vertex);
+	abstract double getIsoValueFor(Vector3 vertex);
 
 	/**
 	 * Calculates the bounding box for the object and returns it as a
@@ -29,12 +36,52 @@ public interface ImplicitFunction {
 	 * 
 	 * @return the bounding box
 	 */
-	Cube getBoundingBox();
+	Cube getBoundingBox() {
+		List<Vector3> boundingBox = new ArrayList<Vector3>();
+
+		boundingBox
+				.add(new Vector3(center.get(0) - boundingBoxRadius, center
+						.get(1) - boundingBoxRadius, center.get(2)
+						- boundingBoxRadius));
+		boundingBox
+				.add(new Vector3(center.get(0) + boundingBoxRadius, center
+						.get(1) - boundingBoxRadius, center.get(2)
+						- boundingBoxRadius));
+		boundingBox
+				.add(new Vector3(center.get(0) + boundingBoxRadius, center
+						.get(1) + boundingBoxRadius, center.get(2)
+						- boundingBoxRadius));
+		boundingBox
+				.add(new Vector3(center.get(0) - boundingBoxRadius, center
+						.get(1) + boundingBoxRadius, center.get(2)
+						- boundingBoxRadius));
+
+		boundingBox
+				.add(new Vector3(center.get(0) - boundingBoxRadius, center
+						.get(1) - boundingBoxRadius, center.get(2)
+						+ boundingBoxRadius));
+		boundingBox
+				.add(new Vector3(center.get(0) + boundingBoxRadius, center
+						.get(1) - boundingBoxRadius, center.get(2)
+						+ boundingBoxRadius));
+		boundingBox
+				.add(new Vector3(center.get(0) + boundingBoxRadius, center
+						.get(1) + boundingBoxRadius, center.get(2)
+						+ boundingBoxRadius));
+		boundingBox
+				.add(new Vector3(center.get(0) - boundingBoxRadius, center
+						.get(1) + boundingBoxRadius, center.get(2)
+						+ boundingBoxRadius));
+
+		return new Cube(boundingBox);
+	}
 
 	/**
 	 * Returns the iso.
 	 * 
 	 * @return the iso
 	 */
-	double getIso();
+	double getIso() {
+		return iso;
+	}
 }

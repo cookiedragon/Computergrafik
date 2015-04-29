@@ -6,21 +6,16 @@
  */
 package aufgabe3;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import computergraphics.math.Vector3;
 
 /**
  * This is an {@link ImplicitFunction} which describes a cuboid superquadric.
  */
-public class ImplicitSuperquadric implements ImplicitFunction {
-
-	private Vector3 center;
-	private double iso = 1.0;
+public class ImplicitSuperquadric extends ImplicitFunction {
 
 	public ImplicitSuperquadric(Vector3 center) {
 		this.center = center;
+		iso = 1.0;
 	}
 
 	@Override
@@ -32,38 +27,4 @@ public class ImplicitSuperquadric implements ImplicitFunction {
 		double cuboid = Math.pow(x, 10) + Math.pow(y, 10) + Math.pow(z, 10);
 		return cuboid;
 	}
-
-	@Override
-	public Cube getBoundingBox() {
-
-		List<Vector3> boundingBox = new ArrayList<Vector3>();
-
-		double puffer = 1.1;
-
-		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
-				- puffer, center.get(2) - puffer));
-		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
-				- puffer, center.get(2) - puffer));
-		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
-				+ puffer, center.get(2) - puffer));
-		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
-				+ puffer, center.get(2) - puffer));
-
-		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
-				- puffer, center.get(2) + puffer));
-		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
-				- puffer, center.get(2) + puffer));
-		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
-				+ puffer, center.get(2) + puffer));
-		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
-				+ puffer, center.get(2) + puffer));
-
-		return new Cube(boundingBox);
-	}
-
-	@Override
-	public double getIso() {
-		return iso;
-	}
-
 }

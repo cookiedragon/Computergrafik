@@ -136,11 +136,8 @@ public class TriangleMeshNode extends Node {
 							.getTextureCoordinate(j));
 					gl.glTexCoord2d(tc.get(0), tc.get(1));
 				} else {
-					if (!hasTexture) {
-						Random r = new Random();
-						gl.glColor3d(r.nextDouble(), r.nextDouble(),
-								r.nextDouble());
-					}
+					Random r = new Random();
+					gl.glColor3d(r.nextDouble(), r.nextDouble(), r.nextDouble());
 				}
 				Vertex v = triangleMesh.getVertex(triangle.get(j));
 				gl.glVertex3d(v.getPosition().get(0), v.getPosition().get(1), v

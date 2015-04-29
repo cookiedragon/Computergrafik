@@ -132,9 +132,9 @@ public class ImplicitNode extends GroupNode {
 				int e3 = table[i + 2];
 				if ((e1 > -1) && (e2 > -1) && (e3 > -1)) {
 					// calculate vertices
-					Vertex v1 = getIntersectionVertex(e1, points);
-					Vertex v2 = getIntersectionVertex(e2, points);
-					Vertex v3 = getIntersectionVertex(e3, points);
+					Vertex v1 = getIntersectionVertex(e1, points, values);
+					Vertex v2 = getIntersectionVertex(e2, points, values);
+					Vertex v3 = getIntersectionVertex(e3, points, values);
 
 					// and hand them to our triangleMesh
 					int v1i = triangleMesh.addVertex(v1);
@@ -153,55 +153,87 @@ public class ImplicitNode extends GroupNode {
 	 *            the edge
 	 * @param points
 	 *            the list of vertices
+	 * @param values
 	 */
-	private Vertex getIntersectionVertex(int edge, List<Vector3> points) {
+	private Vertex getIntersectionVertex(int edge, List<Vector3> points,
+			List<Double> values) {
 
 		// find the two points of the edge
 		Vector3 p1;
 		Vector3 p2;
+		double iso1;
+		double iso2;
 		if (edge == 0) {
 			p1 = points.get(0);
 			p2 = points.get(1);
+			iso1 = values.get(0);
+			iso2 = values.get(1);
 		} else if (edge == 1) {
 			p1 = points.get(1);
 			p2 = points.get(2);
+			iso1 = values.get(1);
+			iso2 = values.get(2);
 		} else if (edge == 2) {
 			p1 = points.get(2);
 			p2 = points.get(3);
+			iso1 = values.get(2);
+			iso2 = values.get(3);
 		} else if (edge == 3) {
 			p1 = points.get(3);
 			p2 = points.get(0);
+			iso1 = values.get(3);
+			iso2 = values.get(0);
 		} else if (edge == 4) {
 			p1 = points.get(4);
 			p2 = points.get(5);
+			iso1 = values.get(4);
+			iso2 = values.get(5);
 		} else if (edge == 5) {
 			p1 = points.get(5);
 			p2 = points.get(6);
+			iso1 = values.get(5);
+			iso2 = values.get(6);
 		} else if (edge == 6) {
 			p1 = points.get(6);
 			p2 = points.get(7);
+			iso1 = values.get(6);
+			iso2 = values.get(7);
 		} else if (edge == 7) {
 			p1 = points.get(7);
 			p2 = points.get(4);
+			iso1 = values.get(7);
+			iso2 = values.get(4);
 		} else if (edge == 8) {
 			p1 = points.get(0);
 			p2 = points.get(4);
+			iso1 = values.get(0);
+			iso2 = values.get(4);
 		} else if (edge == 9) {
 			p1 = points.get(1);
 			p2 = points.get(5);
+			iso1 = values.get(1);
+			iso2 = values.get(5);
 		} else if (edge == 10) {
 			p1 = points.get(3);
 			p2 = points.get(7);
+			iso1 = values.get(3);
+			iso2 = values.get(7);
 		} else { // edge == 11
 			p1 = points.get(2);
 			p2 = points.get(6);
+			iso1 = values.get(2);
+			iso2 = values.get(6);
 		}
 
-		// calculate intersection coordinates
-		double x = p1.get(0) + ((p2.get(0) - p1.get(0)) * 0.5);
-		double y = p1.get(1) + ((p2.get(1) - p1.get(1)) * 0.5);
-		double z = p1.get(2) + ((p2.get(2) - p1.get(2)) * 0.5);
+		// calculate basic intersection coordinates
+		// double x = p1.get(0) + ((p2.get(0) - p1.get(0)) * 0.5);
+		// double y = p1.get(1) + ((p2.get(1) - p1.get(1)) * 0.5);
+		// double z = p1.get(2) + ((p2.get(2) - p1.get(2)) * 0.5);
+		// return new Vertex(new Vector3(x, y, z));
 
-		return new Vertex(new Vector3(x, y, z));
+		// calculate properly interpolated coordinates
+		double t = (iso - iso1) / (iso2 - iso1);
+		Vector3 p = p1.multiply(1 - t).add(p2.multiply(t));
+		return new Vertex(p);
 	}
 }

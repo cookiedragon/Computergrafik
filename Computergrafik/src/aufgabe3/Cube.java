@@ -1,3 +1,9 @@
+/**
+ * Praktikum AI WP Computergrafik, SS 2015
+ * Gruppe:	Corinna Klaukin (corinna.klaukin@haw-hamburg.de)
+ * 			Anna Steinhauer (annachristin.steinhauer@haw-hamburg.de)
+ * Aufgabe: Aufgabenblatt 3
+ */
 package aufgabe3;
 
 import java.util.ArrayList;
@@ -5,6 +11,10 @@ import java.util.List;
 
 import computergraphics.math.Vector3;
 
+/**
+ * This is a cube, which can grid itself. Needed as helper for the Marching
+ * Cubes algorithm.
+ */
 public class Cube {
 
 	private List<Vector3> vertices;
@@ -38,14 +48,14 @@ public class Cube {
 							.add(new Vector3(k + step, j + step, i + step));
 					littleVertices.add(new Vector3(k, j + step, i + step));
 					Cube cube = new Cube(littleVertices);
-//					System.out.println(cube.toString());
+					// System.out.println(cube.toString());
 					grid.add(cube);
 				}
 			}
 		}
 		return grid;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

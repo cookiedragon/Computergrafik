@@ -6,13 +6,20 @@
  */
 package aufgabe3;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import computergraphics.math.Vector3;
 
+/**
+ * This is an {@link ImplicitFunction} which describes a torus.
+ */
 public class ImplicitTorus implements ImplicitFunction {
 
 	private double innerRadius;
 	private double outerRadius;
 	private Vector3 center;
+	private double iso = 0.0;
 
 	public ImplicitTorus(double radiusInnen, double radiusAussen,
 			Vector3 mittelPunkt) {
@@ -37,12 +44,35 @@ public class ImplicitTorus implements ImplicitFunction {
 
 	@Override
 	public Cube getBoundingBox() {
-		return null;
+		
+		List<Vector3> boundingBox = new ArrayList<Vector3>();
+
+		double puffer = outerRadius + 0.1;
+
+		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
+				- puffer, center.get(2) - puffer));
+		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
+				- puffer, center.get(2) - puffer));
+		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
+				+ puffer, center.get(2) - puffer));
+		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
+				+ puffer, center.get(2) - puffer));
+
+		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
+				- puffer, center.get(2) + puffer));
+		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
+				- puffer, center.get(2) + puffer));
+		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
+				+ puffer, center.get(2) + puffer));
+		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
+				+ puffer, center.get(2) + puffer));
+
+		return new Cube(boundingBox);
 	}
 
 	@Override
 	public double getIso() {
-		return 0.0;
+		return iso;
 	}
 
 }

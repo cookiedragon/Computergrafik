@@ -11,6 +11,9 @@ import java.util.List;
 
 import computergraphics.math.Vector3;
 
+/**
+ * This is an {@link ImplicitFunction} which describes a sphere.
+ */
 public class ImplicitSphere implements ImplicitFunction {
 
 	private double radius;

@@ -40,4 +40,9 @@ public class ImplicitTorus implements ImplicitFunction {
 		return null;
 	}
 
+	@Override
+	public double getIso() {
+		return 0.0;
+	}
+
 }

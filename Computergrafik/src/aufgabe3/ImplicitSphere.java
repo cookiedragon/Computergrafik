@@ -15,6 +15,7 @@ public class ImplicitSphere implements ImplicitFunction {
 
 	private double radius;
 	private Vector3 center;
+	private double iso = 0.0;
 
 	public ImplicitSphere(double radius, Vector3 mittelPunkt) {
 		this.radius = radius;
@@ -33,20 +34,35 @@ public class ImplicitSphere implements ImplicitFunction {
 
 	@Override
 	public Cube getBoundingBox() {
-		
+
 		List<Vector3> boundingBox = new ArrayList<Vector3>();
-		
-		boundingBox.add(new Vector3(center.get(0) - radius, center.get(1) - radius, center.get(2) - radius));
-		boundingBox.add(new Vector3(center.get(0) + radius, center.get(1) - radius, center.get(2) - radius));
-		boundingBox.add(new Vector3(center.get(0) + radius, center.get(1) + radius, center.get(2) - radius));
-		boundingBox.add(new Vector3(center.get(0) - radius, center.get(1) + radius, center.get(2) - radius));
-		
-		boundingBox.add(new Vector3(center.get(0) - radius, center.get(1) - radius, center.get(2) + radius));
-		boundingBox.add(new Vector3(center.get(0) + radius, center.get(1) - radius, center.get(2) + radius));
-		boundingBox.add(new Vector3(center.get(0) + radius, center.get(1) + radius, center.get(2) + radius));
-		boundingBox.add(new Vector3(center.get(0) - radius, center.get(1) + radius, center.get(2) + radius));
-		
+
+		double puffer = radius + 0.1;
+
+		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
+				- puffer, center.get(2) - puffer));
+		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
+				- puffer, center.get(2) - puffer));
+		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
+				+ puffer, center.get(2) - puffer));
+		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
+				+ puffer, center.get(2) - puffer));
+
+		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
+				- puffer, center.get(2) + puffer));
+		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
+				- puffer, center.get(2) + puffer));
+		boundingBox.add(new Vector3(center.get(0) + puffer, center.get(1)
+				+ puffer, center.get(2) + puffer));
+		boundingBox.add(new Vector3(center.get(0) - puffer, center.get(1)
+				+ puffer, center.get(2) + puffer));
+
 		return new Cube(boundingBox);
+	}
+
+	@Override
+	public double getIso() {
+		return iso;
 	}
 
 }

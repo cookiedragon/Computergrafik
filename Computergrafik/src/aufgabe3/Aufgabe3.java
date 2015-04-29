@@ -26,7 +26,7 @@ public class Aufgabe3 extends AbstractCGFrame {
 		getRoot().addChild(colorNode);
 
 		// get a sphere
-		Vector3 center = new Vector3(1.0, 2.0, 1.0);
+		Vector3 center = new Vector3(0.0, 0.0, 0.0);
 		double radius = 2.0;
 		ImplicitSphere sphere = new ImplicitSphere(radius, center);
 		ImplicitNode implicitNode = new ImplicitNode(sphere);

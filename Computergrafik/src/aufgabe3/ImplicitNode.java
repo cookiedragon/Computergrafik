@@ -13,8 +13,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+import aufgabe2und4.TriangleMesh;
 import aufgabe2und4.TriangleMeshNode;
 import computergraphics.datastructures.ITriangleMesh;
+import computergraphics.datastructures.Triangle;
+import computergraphics.datastructures.Vertex;
 import computergraphics.math.Vector3;
 import computergraphics.scenegraph.GroupNode;
 
@@ -26,24 +29,39 @@ import computergraphics.scenegraph.GroupNode;
  */
 public class ImplicitNode extends GroupNode {
 
-	private static final String lookup = "resources/caseLookupTable.txt";
-
 	/**
 	 * The {@link ITriangleMesh} that holds the data.
 	 */
-	private ITriangleMesh triangleMesh;
+	private ITriangleMesh triangleMesh = new TriangleMesh();
 
 	/**
-	 * The {@link ImplicitFunction} that describes the object.
+	 * The path for the lookup table.
 	 */
-	private ImplicitFunction implicitFunction;
+	private static final String lookup = "resources/caseLookupTable.txt";
 
+	/**
+	 * The lookup table.
+	 */
+	private int[] table;
+
+	/**
+	 * The iso value of the {@link ImplicitFunction}.
+	 */
+	private double iso = 0.0;
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param implicitFunction
+	 *            the {@link ImplicitFunction}
+	 */
 	public ImplicitNode(ImplicitFunction implicitFunction) {
-		this.implicitFunction = implicitFunction;
-		Cube boundingBox = implicitFunction.getBoundingBox();
+
+		iso = implicitFunction.getIso();
 
 		// make grid
 		double gridSize = 50;
+		Cube boundingBox = implicitFunction.getBoundingBox();
 		List<Cube> grid = boundingBox.makeLittleCubes(gridSize);
 
 		// load the lookup table file
@@ -54,10 +72,14 @@ public class ImplicitNode extends GroupNode {
 			List<Double> values = new ArrayList<Double>();
 			// calculate function values (iso) for all the vertices
 			for (Vector3 vertex : cube.getVertices()) {
-				values.add(implicitFunction.getIsoValueFor(vertex));
+				double iso = implicitFunction.getIsoValueFor(vertex);
+				values.add(iso);
 			}
 			createTriangles(cube.getVertices(), values);
 		}
+
+		// hand it over to the child node to actually draw
+		this.addChild(new TriangleMeshNode(triangleMesh));
 	}
 
 	private void loadLookupTable() {
@@ -66,7 +88,7 @@ public class ImplicitNode extends GroupNode {
 			@SuppressWarnings("resource")
 			Scanner scanner = new Scanner(new File(lookup))
 					.useDelimiter("\\s*,\\s*|\\s*\\{\\s*|\\s*\\}\\s*");
-			int[] table = new int[15*256];
+			table = new int[15 * 256];
 			int i = 0;
 			while (scanner.hasNext()) {
 				if (scanner.hasNextInt()) {
@@ -93,19 +115,93 @@ public class ImplicitNode extends GroupNode {
 	 */
 	private void createTriangles(List<Vector3> points, List<Double> values) {
 
-		int caseIndex = 0;
+		double caseIndex = 0;
 		Iterator<Double> iterator = values.iterator();
 		// are isos out or in?
-		for (int i = 1; i < 128; i *= 2) {
-			caseIndex += i * (iterator.next() > 0 ? 1 : 0);
+		for (int i = 1; i < 129; i *= 2) {
+			caseIndex += i * (iterator.next() > iso ? 1 : 0);
 		}
 
+		// if implicit function cuts through our cube
 		if (caseIndex != 0 && caseIndex != 255) {
 			// lookup
-			// Schnittstellen berechnen
-			// Dreiecke bauen
-			// im TriangleMesh speichern
+			int start = (int) (caseIndex * 15);
+			for (int i = start; i < (start + 15); i += 3) {
+				int e1 = table[i];
+				int e2 = table[i + 1];
+				int e3 = table[i + 2];
+				if ((e1 > -1) && (e2 > -1) && (e3 > -1)) {
+					// calculate vertices
+					Vertex v1 = getIntersectionVertex(e1, points);
+					Vertex v2 = getIntersectionVertex(e2, points);
+					Vertex v3 = getIntersectionVertex(e3, points);
+
+					// and hand them to our triangleMesh
+					int v1i = triangleMesh.addVertex(v1);
+					int v2i = triangleMesh.addVertex(v2);
+					int v3i = triangleMesh.addVertex(v3);
+					triangleMesh.addTriangle(new Triangle(v1i, v2i, v3i));
+				}
+			}
 		}
 	}
 
+	/**
+	 * Calculates the vertex at the intersection of the given edge.
+	 * 
+	 * @param edge
+	 *            the edge
+	 * @param points
+	 *            the list of vertices
+	 */
+	private Vertex getIntersectionVertex(int edge, List<Vector3> points) {
+
+		// find the two points of the edge
+		Vector3 p1;
+		Vector3 p2;
+		if (edge == 0) {
+			p1 = points.get(0);
+			p2 = points.get(1);
+		} else if (edge == 1) {
+			p1 = points.get(1);
+			p2 = points.get(2);
+		} else if (edge == 2) {
+			p1 = points.get(2);
+			p2 = points.get(3);
+		} else if (edge == 3) {
+			p1 = points.get(3);
+			p2 = points.get(0);
+		} else if (edge == 4) {
+			p1 = points.get(4);
+			p2 = points.get(5);
+		} else if (edge == 5) {
+			p1 = points.get(5);
+			p2 = points.get(6);
+		} else if (edge == 6) {
+			p1 = points.get(6);
+			p2 = points.get(7);
+		} else if (edge == 7) {
+			p1 = points.get(7);
+			p2 = points.get(4);
+		} else if (edge == 8) {
+			p1 = points.get(0);
+			p2 = points.get(4);
+		} else if (edge == 9) {
+			p1 = points.get(1);
+			p2 = points.get(5);
+		} else if (edge == 10) {
+			p1 = points.get(3);
+			p2 = points.get(7);
+		} else { // edge == 11
+			p1 = points.get(2);
+			p2 = points.get(6);
+		}
+
+		// calculate intersection coordinates
+		double x = p1.get(0) + ((p2.get(0) - p1.get(0)) * 0.5);
+		double y = p1.get(1) + ((p2.get(1) - p1.get(1)) * 0.5);
+		double z = p1.get(2) + ((p2.get(2) - p1.get(2)) * 0.5);
+
+		return new Vertex(new Vector3(x, y, z));
+	}
 }

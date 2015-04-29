@@ -30,4 +30,11 @@ public interface ImplicitFunction {
 	 * @return the bounding box
 	 */
 	Cube getBoundingBox();
+
+	/**
+	 * Returns the iso.
+	 * 
+	 * @return the iso
+	 */
+	double getIso();
 }

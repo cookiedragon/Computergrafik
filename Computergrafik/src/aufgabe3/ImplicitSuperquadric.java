@@ -13,6 +13,12 @@ import computergraphics.math.Vector3;
  */
 public class ImplicitSuperquadric extends ImplicitFunction {
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param center
+	 *            the center
+	 */
 	public ImplicitSuperquadric(Vector3 center) {
 		this.center = center;
 		iso = 1.0;

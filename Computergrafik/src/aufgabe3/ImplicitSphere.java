@@ -13,11 +13,22 @@ import computergraphics.math.Vector3;
  */
 public class ImplicitSphere extends ImplicitFunction {
 
+	/**
+	 * The radius.
+	 */
 	private double radius;
 
-	public ImplicitSphere(double radius, Vector3 mittelPunkt) {
+	/**
+	 * Constructor.
+	 * 
+	 * @param radius
+	 *            the radius
+	 * @param center
+	 *            the center
+	 */
+	public ImplicitSphere(double radius, Vector3 center) {
 		this.radius = radius;
-		this.center = mittelPunkt;
+		this.center = center;
 
 		boundingBoxRadius = radius + 0.1;
 	}

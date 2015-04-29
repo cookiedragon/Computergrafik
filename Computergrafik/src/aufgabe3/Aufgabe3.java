@@ -39,7 +39,7 @@ public class Aufgabe3 extends AbstractCGFrame {
 		// get a superquadric
 		ImplicitSuperquadric superquadric = new ImplicitSuperquadric(center);
 
-		ImplicitNode implicitNode = new ImplicitNode(superquadric);
+		ImplicitNode implicitNode = new ImplicitNode(torus);
 		colorNode.addChild(implicitNode);
 	}
 

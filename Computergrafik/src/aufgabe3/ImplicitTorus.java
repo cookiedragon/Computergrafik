@@ -13,9 +13,26 @@ import computergraphics.math.Vector3;
  */
 public class ImplicitTorus extends ImplicitFunction {
 
+	/**
+	 * The inner radius.
+	 */
 	private double innerRadius;
+
+	/**
+	 * The outer radius.
+	 */
 	private double outerRadius;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param innerRadius
+	 *            the inner radius
+	 * @param outerRadius
+	 *            the outer radius
+	 * @param center
+	 *            the center
+	 */
 	public ImplicitTorus(double innerRadius, double outerRadius, Vector3 center) {
 		this.innerRadius = innerRadius;
 		this.outerRadius = outerRadius;

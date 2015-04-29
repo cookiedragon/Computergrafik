@@ -17,18 +17,49 @@ import computergraphics.math.Vector3;
  */
 public class Cube {
 
+	/**
+	 * The vertices.
+	 */
 	private List<Vector3> vertices;
+
+	/**
+	 * The length of the sides of this cube.
+	 */
 	private double length;
 
-	public Cube(List<Vector3> vertices) {
+	/**
+	 * Constructor.
+	 * 
+	 * @param vertices
+	 *            the vertices
+	 * @throws RuntimeException
+	 *             if amount of vertices is not exactly 8
+	 */
+	public Cube(List<Vector3> vertices) throws RuntimeException {
+		if (vertices.size() != 8) {
+			throw new RuntimeException(
+					"A cube should have exactly 8 vertices, dooofus!");
+		}
 		this.vertices = vertices;
 		length = Math.abs(vertices.get(0).get(0) - vertices.get(1).get(0));
 	}
 
+	/**
+	 * Gets a list of all the 8 vertices of this cube.
+	 * 
+	 * @return a list of vertices
+	 */
 	public List<Vector3> getVertices() {
 		return vertices;
 	}
 
+	/**
+	 * Calculates all the little {@link Cube}s, that fill the big one.
+	 * 
+	 * @param gridSize
+	 *            the size of the grid, i.e. how many cubes per axis
+	 * @return the list of grid cubes
+	 */
 	public List<Cube> makeLittleCubes(double gridSize) {
 		List<Cube> grid = new ArrayList<Cube>();
 		double step = length / gridSize;

@@ -17,8 +17,19 @@ import computergraphics.math.Vector3;
  */
 public abstract class ImplicitFunction {
 
+	/**
+	 * The iso value. Default ist 0.0;
+	 */
 	protected double iso = 0.0;
+
+	/**
+	 * The center of the object.
+	 */
 	protected Vector3 center;
+
+	/**
+	 * The radius/side length of the bounding box.
+	 */
 	protected double boundingBoxRadius = 1.1;
 
 	/**

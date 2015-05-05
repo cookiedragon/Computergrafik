@@ -6,6 +6,7 @@
  */
 package aufgabe3;
 
+import aufgabe1.TranslationNode;
 import computergraphics.framework.AbstractCGFrame;
 import computergraphics.math.Vector3;
 import computergraphics.scenegraph.ShaderNode;
@@ -39,8 +40,19 @@ public class Aufgabe3 extends AbstractCGFrame {
 		// get a superquadric
 		ImplicitSuperquadric superquadric = new ImplicitSuperquadric(center);
 
-		ImplicitNode implicitNode = new ImplicitNode(torus);
-		colorNode.addChild(implicitNode);
+		TranslationNode tNode1 = new TranslationNode(
+				new Vector3(-3.0, 0.0, 0.0));
+		TranslationNode tNode3 = new TranslationNode(new Vector3(3.0, 0.0, 0.0));
+
+		ImplicitNode implicitNode1 = new ImplicitNode(sphere);
+		ImplicitNode implicitNode2 = new ImplicitNode(torus);
+		ImplicitNode implicitNode3 = new ImplicitNode(superquadric);
+
+		tNode1.addChild(implicitNode1);
+		colorNode.addChild(tNode1);
+		colorNode.addChild(implicitNode2);
+		tNode3.addChild(implicitNode3);
+		colorNode.addChild(tNode3);
 	}
 
 	/*

@@ -18,7 +18,7 @@ import computergraphics.math.Vector3;
 public abstract class ImplicitFunction {
 
 	/**
-	 * The iso value. Default ist 0.0;
+	 * The iso value. Default is 0.0;
 	 */
 	protected double iso = 0.0;
 
@@ -30,7 +30,7 @@ public abstract class ImplicitFunction {
 	/**
 	 * The radius/side length of the bounding box.
 	 */
-	protected double boundingBoxRadius = 1.1;
+	protected double boundingBoxRadius = 2.1;
 
 	/**
 	 * Calculates the iso value for a given vertex.

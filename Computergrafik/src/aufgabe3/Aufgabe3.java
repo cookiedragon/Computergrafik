@@ -39,14 +39,20 @@ public class Aufgabe3 extends AbstractCGFrame {
 
 		// get a superquadric
 		ImplicitSuperquadric superquadric = new ImplicitSuperquadric(center);
+		
+		// get a heart
+		ImplicitHeart heart = new ImplicitHeart(center);
+		
+		// get a genus
+		ImplicitGenus genus = new ImplicitGenus(center);
 
 		TranslationNode tNode1 = new TranslationNode(
 				new Vector3(-3.0, 0.0, 0.0));
 		TranslationNode tNode3 = new TranslationNode(new Vector3(3.0, 0.0, 0.0));
 
-		ImplicitNode implicitNode1 = new ImplicitNode(sphere);
-		ImplicitNode implicitNode2 = new ImplicitNode(torus);
-		ImplicitNode implicitNode3 = new ImplicitNode(superquadric);
+		ImplicitNode implicitNode1 = new ImplicitNode(torus);
+		ImplicitNode implicitNode2 = new ImplicitNode(superquadric);
+		ImplicitNode implicitNode3 = new ImplicitNode(genus);
 
 		tNode1.addChild(implicitNode1);
 		colorNode.addChild(tNode1);

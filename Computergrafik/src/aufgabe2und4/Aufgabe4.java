@@ -10,6 +10,7 @@ import computergraphics.datastructures.ITriangleMesh;
 import computergraphics.datastructures.ObjIO;
 import computergraphics.framework.AbstractCGFrame;
 import computergraphics.scenegraph.ShaderNode;
+import computergraphics.scenegraph.ShaderNode.ShaderType;
 
 public class Aufgabe4 extends AbstractCGFrame {
 
@@ -28,7 +29,7 @@ public class Aufgabe4 extends AbstractCGFrame {
 	 */
 	public Aufgabe4(int timerInverval) {
 		super(timerInverval);
-		ShaderNode colorNode = new ShaderNode();
+		ShaderNode colorNode = new ShaderNode(true);
 		getRoot().addChild(colorNode);
 
 		ITriangleMesh triangleMesh = new TriangleMesh();

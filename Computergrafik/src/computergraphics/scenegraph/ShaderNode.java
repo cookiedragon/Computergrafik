@@ -1,8 +1,19 @@
+/**
+ * Prof. Philipp Jenke
+ * Hochschule für Angewandte Wissenschaften (HAW), Hamburg
+ * 
+ * Base framework for "WP Computergrafik".
+ */
 package computergraphics.scenegraph;
 
 import com.jogamp.opengl.GL2;
 
-
+/**
+ * This node provides a Shader which can be used to nicely render content (child
+ * nodes).
+ * 
+ * @author Philipp Jenke
+ */
 public class ShaderNode extends Node {
 
 	/**
@@ -11,13 +22,35 @@ public class ShaderNode extends Node {
 	private CgGlslShader shader;
 
 	/**
+	 * These shader types are currently supported. PHONG = simple lighting model
+	 * (default), TEXTURE = Use a texture.
+	 */
+	public enum ShaderType {
+		PHONG, TEXTURE
+	}
+
+	/**
 	 * Constructor
 	 */
 	public ShaderNode() {
+		this(false);
+	}
 
-		// Use a Phong shader
-		shader = new CgGlslShader("shader/vertex_shader_phong_shading.glsl",
-				"shader/fragment_shader_phong_shading.glsl");
+	/**
+	 * Constructor, which allows to set the shader type.
+	 */
+	public ShaderNode(boolean texture) {
+
+		if (texture) {
+			// Use a texture shader
+			shader = new CgGlslShader(
+					"shader/vertex_shader_texture_shading.glsl",
+					"shader/fragment_shader_texture_shading.glsl");
+		} else {
+			shader = new CgGlslShader(
+					"shader/vertex_shader_phong_shading.glsl",
+					"shader/fragment_shader_phong_shading.glsl");
+		}
 	}
 
 	@Override

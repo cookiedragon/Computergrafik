@@ -44,8 +44,8 @@ public class ShaderNode extends Node {
 		if (texture) {
 			// Use a texture shader
 			shader = new CgGlslShader(
-					"shader/vertex_shader_texture_shading.glsl",
-					"shader/fragment_shader_texture_shading.glsl");
+					"shader/vertex_shader_texture.glsl",
+					"shader/fragment_shader_texture.glsl");
 		} else {
 			shader = new CgGlslShader(
 					"shader/vertex_shader_phong_shading.glsl",

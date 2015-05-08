@@ -10,7 +10,6 @@ import computergraphics.datastructures.ITriangleMesh;
 import computergraphics.datastructures.ObjIO;
 import computergraphics.framework.AbstractCGFrame;
 import computergraphics.scenegraph.ShaderNode;
-import computergraphics.scenegraph.ShaderNode.ShaderType;
 
 public class Aufgabe4 extends AbstractCGFrame {
 

@@ -60,7 +60,7 @@ public class ImplicitNode extends GroupNode {
 		iso = implicitFunction.getIso();
 
 		// make grid
-		double gridSize = 50;
+		double gridSize = 25;
 		Cube boundingBox = implicitFunction.getBoundingBox();
 		List<Cube> grid = boundingBox.makeLittleCubes(gridSize);
 

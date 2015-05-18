@@ -21,7 +21,7 @@ public class Aufgabe4 extends AbstractCGFrame {
 	/**
 	 * Path to the .obj that stores a model of a cube.
 	 */
-	private String cubePath = "meshes/cube.obj";
+	private String cubePath = "meshes/kitty_cube.obj";
 
 	/**
 	 * Constructor.

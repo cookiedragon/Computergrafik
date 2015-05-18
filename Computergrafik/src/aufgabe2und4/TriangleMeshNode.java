@@ -76,9 +76,6 @@ public class TriangleMeshNode extends Node {
 
 		Texture texture = loadTexture(gl);
 
-		if (!hasTexture) {
-			gl.glColor3d(1.0, 0.0, 0.8);
-		}
 		gl.glBegin(GL2.GL_TRIANGLES);
 		drawTriangles(gl);
 		gl.glEnd();

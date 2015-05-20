@@ -98,13 +98,14 @@ public class TriangleMeshNode extends Node {
 			try {
 				Texture texture = TextureIO.newTexture(
 						new File(triangleMesh.getTextureFilename()), false);
+				texture.setTexParameteri(gl, GL2.GL_TEXTURE_WRAP_S,
+						GL2.GL_CLAMP_TO_EDGE);
 				texture.setTexParameterf(gl, GL2.GL_TEXTURE_MIN_FILTER,
-						GL2.GL_LINEAR);
-				texture.setTexParameterf(gl, GL2.GL_TEXTURE_MAG_FILTER,
-						GL2.GL_LINEAR);
-				gl.glEnable(GL2.GL_TEXTURE_2D);
-				texture.bind(gl);
+						GL2.GL_NEAREST);
+				gl.glTexEnvf(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE,
+						GL2.GL_DECAL);
 				texture.enable(gl);
+				texture.bind(gl);
 				return texture;
 			} catch (GLException | IOException e) {
 				e.printStackTrace();

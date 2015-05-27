@@ -11,13 +11,15 @@ import java.util.List;
 import computergraphics.math.Vector3;
 
 /**
- * This is an bezier specialised implementation of a {@link Curve}. 
+ * This is an bezier specialised implementation of a {@link Curve}.
  */
 public class BezierCurve extends Curve {
 
 	/**
 	 * Constructor.
-	 * @param controlPoints the control points
+	 * 
+	 * @param controlPoints
+	 *            the control points
 	 */
 	public BezierCurve(List<Vector3> controlPoints) {
 		this.controlPoints = controlPoints;
@@ -48,10 +50,23 @@ public class BezierCurve extends Curve {
 		return fac;
 	}
 
-	@Override
-	public Vector3 getTangent(double value) {
-		
-		return null;
+	private double derivative(int n, int i, double t) {
+		int fac = (faculty(n) / (faculty(i) * faculty(n - i)));
+		double one = i * fac * Math.pow((1 - t), (n - i))
+				* Math.pow(t, (i - 1));
+		double two = fac * (n - i) * Math.pow((1 - t), (n - i - 1))
+				* Math.pow(t, i);
+		return one - two;
 	}
 
+	@Override
+	public Vector3 getTangent(double t) {
+		Vector3 p = new Vector3();
+		int n = controlPoints.size() - 1;
+		int i = 0;
+		for (Vector3 c : controlPoints) {
+			p = p.add(c.multiply(derivative(n, i++, t)));
+		}
+		return p;
+	}
 }

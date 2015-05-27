@@ -20,6 +20,8 @@ public class Aufgabe5 extends AbstractCGFrame {
 	 */
 	private static final long serialVersionUID = 4257130065274995543L;
 
+	private CurveNode curveNode;
+
 	/**
 	 * Constructor.
 	 */
@@ -42,10 +44,11 @@ public class Aufgabe5 extends AbstractCGFrame {
 		ces.add(new Vector3(0.0, 0.0, 0.0));
 		ces.add(new Vector3(1.0, 1.0, 0.0));
 		ces.add(new Vector3(0.0, 3.0, 4.0));
-		// bez.add(new Vector3(1.0, 2.0, 3.0));
+		ces.add(new Vector3(1.0, 2.0, 3.0));
 
-		// colorNode.addChild(new CurveNode(new BezierCurve(ces)));
-		colorNode.addChild(new CurveNode(new MonomCurve(pes2, 0.5)));
+		curveNode = new CurveNode(new BezierCurve(ces));
+		// curveNode = new CurveNode(new MonomCurve(pes2, 0.5));
+		colorNode.addChild(curveNode);
 	}
 
 	/*
@@ -56,12 +59,16 @@ public class Aufgabe5 extends AbstractCGFrame {
 	@Override
 	protected void timerTick() {
 		System.out.println("Tick");
+
+		if (curveNode != null) {
+			curveNode.updateT();
+		}
 	}
 
 	/**
 	 * Program entry point.
 	 */
 	public static void main(String[] args) {
-		new Aufgabe5(1000);
+		new Aufgabe5(100);
 	}
 }

@@ -24,6 +24,9 @@ public class CurveNode extends Node {
 	 */
 	private Curve curve;
 
+	private double t = 0.0;
+	private boolean tUp = true;
+
 	/**
 	 * Constructor.
 	 * 
@@ -66,7 +69,6 @@ public class CurveNode extends Node {
 		gl.glEnd();
 
 		// the tangent
-		double t = 0.5;
 		gl.glLineWidth(3.0f);
 		gl.glBegin(GL2.GL_LINES);
 		gl.glColor3d(0.0, 0.0, 1.0);
@@ -81,4 +83,24 @@ public class CurveNode extends Node {
 		transNode.drawGl(gl);
 	}
 
+	public void updateT() {
+		
+		if (tUp) {
+			t = t + 0.01;
+		} else {
+			t = t - 0.01;
+		}
+		if (t <= 0.0) {
+			tUp = true;
+			System.out.println("flipped up");
+		} else if (t >= 1.0) {
+			tUp = false;
+			System.out.println("flipped down");
+		}
+		if (tUp) {
+			t = t + 0.01;
+		} else {
+			t = t - 0.01;
+		}
+	}
 }

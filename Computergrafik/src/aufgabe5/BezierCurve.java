@@ -6,17 +6,46 @@
  */
 package aufgabe5;
 
+import java.util.List;
+
 import computergraphics.math.Vector3;
 
 public class BezierCurve extends Curve {
 
+	public BezierCurve(List<Vector3> controlPoints) {
+		this.controlPoints = controlPoints;
+	}
+
 	@Override
-	public Vector3 getVertexForParameter(double param) {
-		return null;
+	public Vector3 getVertexForParameter(double t) {
+
+		Vector3 p = new Vector3();
+		int n = controlPoints.size() - 1;
+		int i = 0;
+		for (Vector3 c : controlPoints) {
+			p = p.add(c.multiply(bezier(n, i, t)));
+			i++;
+		}
+		return p;
+	}
+
+	private double bezier(int n, int i, double t) {
+
+		int fac = (faculty(n) / (faculty(i) * faculty(n - i)));
+		return fac * Math.pow(t, i) * Math.pow((1 - t), (n - i));
+	}
+
+	private int faculty(int max) {
+		int fac = 1;
+		for (int f = 1; f <= max; f++) {
+			fac = fac * f;
+		}
+		return fac;
 	}
 
 	@Override
 	public Vector3 getTangent(double value) {
+		
 		return null;
 	}
 

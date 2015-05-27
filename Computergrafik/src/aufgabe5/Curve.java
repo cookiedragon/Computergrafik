@@ -33,18 +33,18 @@ public abstract class Curve {
 	/**
 	 * Calculates the vertex for a given parameter.
 	 * 
-	 * @param param
-	 *            the parameter
+	 * @param t
+	 *            the parameter t
 	 * @return the vertex
 	 */
-	public abstract Vector3 getVertexForParameter(double param);
+	public abstract Vector3 getVertexForParameter(double t);
 
 	/**
 	 * Get the tangent {@link Vector3} for the curve at a given value.
 	 * 
-	 * @param value
-	 *            the value
+	 * @param t
+	 *            the parameter t
 	 * @return the tangent {@link Vector3}
 	 */
-	public abstract Vector3 getTangent(double value);
+	public abstract Vector3 getTangent(double t);
 }

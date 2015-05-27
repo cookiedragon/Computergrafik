@@ -6,7 +6,11 @@
  */
 package aufgabe5;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import computergraphics.framework.AbstractCGFrame;
+import computergraphics.math.Vector3;
 import computergraphics.scenegraph.ShaderNode;
 
 public class Aufgabe5 extends AbstractCGFrame {
@@ -24,8 +28,25 @@ public class Aufgabe5 extends AbstractCGFrame {
 		ShaderNode colorNode = new ShaderNode();
 		getRoot().addChild(colorNode);
 
-		colorNode.addChild(new CurveNode(new BezierCurve()));
-		colorNode.addChild(new CurveNode(new MonomCurve()));
+		List<Vector3> pes1 = new ArrayList<Vector3>();
+		pes1.add(new Vector3(0, 0, 0));
+		pes1.add(new Vector3(-0.5, 0.5, -0.9));
+		pes1.add(new Vector3(0.7, -0.2, 0.2));
+		double t = 0.5;
+		
+		List<Vector3> pes2 = new ArrayList<Vector3>();
+		pes2.add(new Vector3(0.0, 0.0, 0.0));
+		pes2.add(new Vector3(1.0, 1.0, 0.0));
+		pes2.add(new Vector3(0.0, 3.0, 4.0));
+
+		List<Vector3> ces = new ArrayList<Vector3>();
+		ces.add(new Vector3(0.0, 0.0, 0.0));
+		ces.add(new Vector3(1.0, 1.0, 0.0));
+		ces.add(new Vector3(0.0, 3.0, 4.0));
+//		bez.add(new Vector3(1.0, 2.0, 3.0));
+		
+		colorNode.addChild(new CurveNode(new BezierCurve(ces)));
+//		 colorNode.addChild(new CurveNode(new MonomCurve(pes2, t)));
 	}
 
 	/*

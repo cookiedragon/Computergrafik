@@ -10,8 +10,19 @@ import java.util.List;
 
 import computergraphics.math.Vector3;
 
+/**
+ * This is an monom specialised implementation of a {@link Curve}.
+ */
 public class MonomCurve extends Curve {
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param pes
+	 *            the points to interpolate into control points
+	 * @param t
+	 *            param specifying the location of the middle point
+	 */
 	public MonomCurve(List<Vector3> pes, double t) {
 
 		// interpolate control points

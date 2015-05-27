@@ -1,3 +1,9 @@
+/**
+ * Praktikum AI WP Computergrafik, SS 2015
+ * Gruppe:	Corinna Klaukin (corinna.klaukin@haw-hamburg.de)
+ * 			Anna Steinhauer (annachristin.steinhauer@haw-hamburg.de)
+ * Aufgabe: Aufgabenblatt 5
+ */
 package aufgabe5;
 
 import aufgabe1.TranslationNode;
@@ -7,10 +13,23 @@ import computergraphics.math.Vector3;
 import computergraphics.scenegraph.Node;
 import computergraphics.scenegraph.SphereNode;
 
+/**
+ * This is a {@link Node}, that uses a {@link Curve} as its object to draw. The
+ * curve's control points, the polygon and the tangent are also being drawn.
+ */
 public class CurveNode extends Node {
 
+	/**
+	 * The curve to be drawn.
+	 */
 	private Curve curve;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param curve
+	 *            the curve
+	 */
 	public CurveNode(Curve curve) {
 		this.curve = curve;
 	}

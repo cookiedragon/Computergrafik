@@ -32,8 +32,7 @@ public class Aufgabe5 extends AbstractCGFrame {
 		pes1.add(new Vector3(0, 0, 0));
 		pes1.add(new Vector3(-0.5, 0.5, -0.9));
 		pes1.add(new Vector3(0.7, -0.2, 0.2));
-		double t = 0.5;
-		
+
 		List<Vector3> pes2 = new ArrayList<Vector3>();
 		pes2.add(new Vector3(0.0, 0.0, 0.0));
 		pes2.add(new Vector3(1.0, 1.0, 0.0));
@@ -43,10 +42,10 @@ public class Aufgabe5 extends AbstractCGFrame {
 		ces.add(new Vector3(0.0, 0.0, 0.0));
 		ces.add(new Vector3(1.0, 1.0, 0.0));
 		ces.add(new Vector3(0.0, 3.0, 4.0));
-//		bez.add(new Vector3(1.0, 2.0, 3.0));
-		
-		colorNode.addChild(new CurveNode(new BezierCurve(ces)));
-//		 colorNode.addChild(new CurveNode(new MonomCurve(pes2, t)));
+		// bez.add(new Vector3(1.0, 2.0, 3.0));
+
+		// colorNode.addChild(new CurveNode(new BezierCurve(ces)));
+		colorNode.addChild(new CurveNode(new MonomCurve(pes2, 0.5)));
 	}
 
 	/*

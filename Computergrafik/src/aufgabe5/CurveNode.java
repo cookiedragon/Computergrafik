@@ -27,6 +27,9 @@ public class CurveNode extends Node {
 	private double t = 0.0;
 	private boolean tUp = true;
 
+	private int triangleDisplayList = -1;
+	private TranslationNode tangentenTransNode;
+
 	/**
 	 * Constructor.
 	 * 
@@ -40,6 +43,29 @@ public class CurveNode extends Node {
 	@Override
 	public void drawGl(GL2 gl) {
 
+		if (triangleDisplayList == -1) {
+			init(gl);
+		}
+		gl.glCallList(triangleDisplayList);
+
+		// the tangent
+		gl.glLineWidth(3.0f);
+		gl.glBegin(GL2.GL_LINES);
+		gl.glColor3d(0.0, 0.0, 1.0);
+		Vector3 tan1 = curve.getVertexForParameter(t);
+		Vector3 tan2 = curve.getTangent(t).add(tan1);
+		gl.glVertex3d(tan1.get(0), tan1.get(1), tan1.get(2));
+		gl.glVertex3d(tan2.get(0), tan2.get(1), tan2.get(2));
+		gl.glEnd();
+		tangentenTransNode.setTrans(tan1);
+		tangentenTransNode.drawGl(gl);
+	}
+
+	private void init(GL2 gl) {
+
+		triangleDisplayList = gl.glGenLists(1);
+		gl.glNewList(triangleDisplayList, GL2.GL_COMPILE);
+
 		// the control points
 		gl.glColor3d(0.0, 1.0, 0.0);
 		for (Vector3 c : curve.getControlPoints()) {
@@ -47,6 +73,7 @@ public class CurveNode extends Node {
 			TranslationNode transNode = new TranslationNode(c);
 			transNode.addChild(sphereNode);
 			transNode.drawGl(gl);
+			this.addChild(transNode);
 		}
 
 		// the polygon
@@ -68,23 +95,18 @@ public class CurveNode extends Node {
 		}
 		gl.glEnd();
 
-		// the tangent
-		gl.glLineWidth(3.0f);
-		gl.glBegin(GL2.GL_LINES);
-		gl.glColor3d(0.0, 0.0, 1.0);
+		// the sphere for the tangent
 		Vector3 tan1 = curve.getVertexForParameter(t);
-		Vector3 tan2 = curve.getTangent(t).add(tan1);
-		gl.glVertex3d(tan1.get(0), tan1.get(1), tan1.get(2));
-		gl.glVertex3d(tan2.get(0), tan2.get(1), tan2.get(2));
-		gl.glEnd();
 		SphereNode sphereNode = new SphereNode(0.1, 20);
-		TranslationNode transNode = new TranslationNode(tan1);
-		transNode.addChild(sphereNode);
-		transNode.drawGl(gl);
+		tangentenTransNode = new TranslationNode(tan1);
+		tangentenTransNode.addChild(sphereNode);
+		this.addChild(tangentenTransNode);
+
+		gl.glEndList();
 	}
 
 	public void updateT() {
-		
+
 		if (tUp) {
 			t = t + 0.01;
 		} else {
@@ -92,10 +114,8 @@ public class CurveNode extends Node {
 		}
 		if (t <= 0.0) {
 			tUp = true;
-			System.out.println("flipped up");
 		} else if (t >= 1.0) {
 			tUp = false;
-			System.out.println("flipped down");
 		}
 		if (tUp) {
 			t = t + 0.01;

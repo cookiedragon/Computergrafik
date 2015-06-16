@@ -91,6 +91,9 @@ public class SphereNode extends Node {
 			IntersectionResult result = new IntersectionResult();
 			result.point = intersection;
 			result.object = this;
+			Vector3 normal = intersection.subtract(center);
+			normal.normalize();
+			result.normal = normal;
 			return result;
 		}
 		return null;

@@ -16,6 +16,7 @@ public class PlaneNode extends Node {
 		this.point = point;
 		this.normal = normal;
 		this.colour = colour;
+		normal.normalize();
 	}
 
 	@Override

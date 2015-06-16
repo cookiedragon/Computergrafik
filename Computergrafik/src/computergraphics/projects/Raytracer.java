@@ -28,6 +28,11 @@ public class Raytracer {
 	private final Node rootNode;
 
 	/**
+	 * The Lightsource.
+	 */
+	private Vector3 light = new Vector3(0, -3, 0);
+
+	/**
 	 * Constructor.
 	 * 
 	 * @param camera
@@ -117,9 +122,62 @@ public class Raytracer {
 		if (!results.isEmpty()) {
 			Comparator<IntersectionResult> com = new ResultComparator();
 			Collections.sort(results, com);
-			return results.get(0).object.getColour();
+			IntersectionResult result = results.get(0);
+			if (!shadow(result)) {
+				return light(result, ray);
+			}
 		}
 		return new Vector3(0, 0, 0);
+	}
+
+	/**
+	 * 
+	 * @param result
+	 *            the intersection
+	 * @return true, if the intersection is in the shadow
+	 */
+	private boolean shadow(IntersectionResult result) {
+		boolean shadow = false;
+		Ray3D ray = new Ray3D(result.point, result.point.subtract(light));
+		for (int i = 0; i < rootNode.getNumberOfChildren(); i++) {
+			Node node = rootNode.getChildNode(i);
+			if (!node.equals(result.object)) {
+				IntersectionResult intersection = node.intersection(ray);
+				if (intersection != null) {
+					shadow = true;
+				}
+			}
+		}
+		return shadow;
+	}
+
+	/**
+	 * 
+	 * @param result
+	 * @param ray
+	 * @return
+	 */
+	private Vector3 light(IntersectionResult result, Ray3D ray) {
+		// Vector vom Schnittpunkt zur Lichtquelle
+		Vector3 l = result.point.subtract(light);
+		l.normalize();
+		// Oberflaechennormale
+		Vector3 n = result.normal;
+		// R ist ... ??? !!!
+		Vector3 r = l.subtract((n.multiply(l.multiply(n))).multiply(2));
+		r.normalize();
+		// Material
+		double m = 20;
+		// (1,1,1)
+		Vector3 one = new Vector3(1.0, 1.0, 1.0);
+		// (N*L)*Objectfarbe
+		Vector3 colourDiff = result.object.getColour().multiply(
+				n.multiply(l) * (-1));
+		// (R*(-Vs))^m * (1,1,1)
+		Vector3 colourSpec = one.multiply(Math.pow(
+				r.multiply(ray.getDirection().multiply(-1.0)), m));
+		// Summe des diffusen Lichts und dem spekularen Licht
+		return colourDiff.add(colourSpec);
 	}
 
 	private final class ResultComparator implements

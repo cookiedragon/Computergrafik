@@ -3,6 +3,10 @@ package computergraphics.projects;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import computergraphics.framework.Camera;
 import computergraphics.math.Vector3;
@@ -13,94 +17,124 @@ import computergraphics.scenegraph.Node;
  */
 public class Raytracer {
 
-  /**
-   * Reference to the current camera.
-   */
-  private final Camera camera;
+	/**
+	 * Reference to the current camera.
+	 */
+	private final Camera camera;
 
-  /**
-   * Reference to the scene root node.
-   */
-  private final Node rootNode;
+	/**
+	 * Reference to the scene root node.
+	 */
+	private final Node rootNode;
 
-  /**
-   * Constructor.
-   * 
-   * @param camera
-   *          Scene camera.
-   * @param rootNode
-   *          Root node of the scenegraph.
-   */
-  public Raytracer(Camera camera, Node rootNode) {
-    this.camera = camera;
-    this.rootNode = rootNode;
-  }
+	/**
+	 * Constructor.
+	 * 
+	 * @param camera
+	 *            Scene camera.
+	 * @param rootNode
+	 *            Root node of the scenegraph.
+	 */
+	public Raytracer(Camera camera, Node rootNode) {
+		this.camera = camera;
+		this.rootNode = rootNode;
+	}
 
-  /**
-   * Creates a raytraced image for the current view with the provided
-   * resolution. The opening angle in x-direction is grabbed from the camera,
-   * the opening angle in y-direction is computed accordingly.
-   * 
-   * @param resolutionX
-   *          X-Resolution of the created image.
-   * 
-   * @param resolutionX
-   *          Y-Resolution of the created image.
-   */
-  public Image render(int resolutionX, int resolutionY) {
-    BufferedImage image =
-        new BufferedImage(resolutionX, resolutionY, BufferedImage.TYPE_INT_RGB);
+	/**
+	 * Creates a raytraced image for the current view with the provided
+	 * resolution. The opening angle in x-direction is grabbed from the camera,
+	 * the opening angle in y-direction is computed accordingly.
+	 * 
+	 * @param resolutionX
+	 *            X-Resolution of the created image.
+	 * 
+	 * @param resolutionX
+	 *            Y-Resolution of the created image.
+	 */
+	public Image render(int resolutionX, int resolutionY) {
+		BufferedImage image = new BufferedImage(resolutionX, resolutionY,
+				BufferedImage.TYPE_INT_RGB);
 
-    Vector3 viewDirection =
-        camera.getRef().subtract(camera.getEye()).getNormalized();
-    Vector3 xDirection = viewDirection.cross(camera.getUp()).getNormalized();
-    Vector3 yDirection = viewDirection.cross(xDirection).getNormalized();
-    double openingAngleYScale =
-        Math.sin(camera.getOpeningAngle() * Math.PI / 180.0);
-    double openingAngleXScale =
-        openingAngleYScale * (double) resolutionX / (double) resolutionY;
+		Vector3 viewDirection = camera.getRef().subtract(camera.getEye())
+				.getNormalized();
+		Vector3 xDirection = viewDirection.cross(camera.getUp())
+				.getNormalized();
+		Vector3 yDirection = viewDirection.cross(xDirection).getNormalized();
+		double openingAngleYScale = Math.sin(camera.getOpeningAngle() * Math.PI
+				/ 180.0);
+		double openingAngleXScale = openingAngleYScale * (double) resolutionX
+				/ (double) resolutionY;
 
-    for (int i = 0; i < resolutionX; i++) {
-      double alpha = (double) i / (double) (resolutionX + 1) - 0.5;
-      for (int j = 0; j < resolutionY; j++) {
-        double beta = (double) j / (double) (resolutionY + 1) - 0.5;
-        Vector3 rayDirection =
-            viewDirection.add(xDirection.multiply(alpha * openingAngleXScale))
-                .add(yDirection.multiply(beta * openingAngleYScale))
-                .getNormalized();
-        Ray3D ray = new Ray3D(camera.getEye(), rayDirection);
+		for (int i = 0; i < resolutionX; i++) {
+			double alpha = (double) i / (double) (resolutionX + 1) - 0.5;
+			for (int j = 0; j < resolutionY; j++) {
+				double beta = (double) j / (double) (resolutionY + 1) - 0.5;
+				Vector3 rayDirection = viewDirection
+						.add(xDirection.multiply(alpha * openingAngleXScale))
+						.add(yDirection.multiply(beta * openingAngleYScale))
+						.getNormalized();
+				Ray3D ray = new Ray3D(camera.getEye(), rayDirection);
 
-        Vector3 color = trace(ray, 0);
+				Vector3 color = trace(ray, 0);
 
-        // Adjust color boundaries
-        for (int index = 0; index < 3; index++) {
-          color.set(index, Math.max(0, Math.min(1, color.get(index))));
-        }
+				// Adjust color boundaries
+				for (int index = 0; index < 3; index++) {
+					color.set(index, Math.max(0, Math.min(1, color.get(index))));
+				}
 
-        image.setRGB(i, j, new Color((int) (255 * color.get(0)),
-            (int) (255 * color.get(1)), (int) (255 * color.get(2))).getRGB());
-      }
-    }
+				image.setRGB(i, j, new Color((int) (255 * color.get(0)),
+						(int) (255 * color.get(1)), (int) (255 * color.get(2)))
+						.getRGB());
+			}
+		}
 
-    return image;
-  }
+		return image;
+	}
 
-  /**
-   * Compute a color from tracing the ray into the scene.
-   * 
-   * @param ray
-   *          Ray which needs to be traced.
-   * @param recursion
-   *          Current recursion depth. Initial recursion depth of the rays
-   *          through the image plane is 0. This parameter is used to abort the
-   *          recursion.
-   * 
-   * @return Color in RGB. All values are in [0,1];
-   */
-  private Vector3 trace(Ray3D ray, int recursion) {
+	/**
+	 * Compute a color from tracing the ray into the scene.
+	 * 
+	 * @param ray
+	 *            Ray which needs to be traced.
+	 * @param recursion
+	 *            Current recursion depth. Initial recursion depth of the rays
+	 *            through the image plane is 0. This parameter is used to abort
+	 *            the recursion.
+	 * 
+	 * @return Color in RGB. All values are in [0,1];
+	 */
+	private Vector3 trace(Ray3D ray, int recursion) {
 
-    // Your task
-    return new Vector3(0, 0, 0);
-  }
+		List<IntersectionResult> results = new ArrayList<IntersectionResult>();
 
+		for (int i = 0; i < rootNode.getNumberOfChildren(); i++) {
+			Node node = rootNode.getChildNode(i);
+			IntersectionResult intersection = node.intersection(ray);
+			if (intersection != null) {
+				results.add(intersection);
+			}
+		}
+		if (!results.isEmpty()) {
+			Comparator<IntersectionResult> com = new ResultComparator();
+			Collections.sort(results, com);
+			return results.get(0).object.getColour();
+		}
+		return new Vector3(0, 0, 0);
+	}
+
+	private final class ResultComparator implements
+			Comparator<IntersectionResult> {
+		@Override
+		public int compare(IntersectionResult o1, IntersectionResult o2) {
+			double z1 = o1.point.get(2);
+			double z2 = o2.point.get(2);
+			if (z1 < z2) {
+				return -1;
+			}
+			if (z1 > z2) {
+				return 1;
+			}
+			return 0;
+		}
+	}
 }

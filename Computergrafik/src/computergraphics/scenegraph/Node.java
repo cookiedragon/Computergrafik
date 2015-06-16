@@ -5,6 +5,10 @@ import java.util.List;
 
 import com.jogamp.opengl.GL2;
 
+import computergraphics.math.Vector3;
+import computergraphics.projects.IntersectionResult;
+import computergraphics.projects.Ray3D;
+
 /**
  * Parent class for all scene graph nodes
  * 
@@ -17,6 +21,11 @@ public abstract class Node {
 	 * List of child nodes
 	 */
 	private List<Node> children = new ArrayList<Node>();
+
+	/**
+	 * The colour of the node
+	 */
+	protected Vector3 colour = new Vector3(1, 1, 1);
 
 	/**
 	 * Add a child node.
@@ -50,4 +59,23 @@ public abstract class Node {
 	 */
 	public abstract void drawGl(GL2 gl);
 
+	/**
+	 * Calculate intersection.
+	 * 
+	 * @param ray
+	 *            the ray
+	 * @return an {@link IntersectionResult} or null, if no intersection
+	 */
+	public IntersectionResult intersection(Ray3D ray) {
+		return null;
+	}
+
+	/**
+	 * Get the colour of the node.
+	 * 
+	 * @return the colour
+	 */
+	public Vector3 getColour() {
+		return colour;
+	}
 }

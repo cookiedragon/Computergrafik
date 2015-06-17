@@ -157,25 +157,23 @@ public class Raytracer {
 	 */
 	private Vector3 light(IntersectionResult result, Ray3D ray) {
 		// Vector vom Schnittpunkt zur Lichtquelle
-		Vector3 l = result.point.subtract(light);
+		Vector3 l = light.subtract(result.point);
 		l.normalize();
 		// Oberflaechennormale
 		Vector3 n = result.normal;
-		if (l.multiply(n) > 0) {
+		if (n.multiply(l) < 0) {
 			return new Vector3();
 		}
 
 		// diffuser Anteil
 		// (N*L)*Objectfarbe
-		Vector3 colourDiff = result.object.getColour().multiply(
-				n.multiply(l) * (-1));
+		Vector3 colourDiff = result.object.getColour().multiply(n.multiply(l));
 
 		// spekulaerer Anteil
 		Vector3 colourSpec = new Vector3();
 		// R ist ... ??? !!!
 		Vector3 r = l.subtract((n.multiply(l.multiply(n) * 2)));
-		r.normalize();
-		if (r.multiply(ray.getDirection().multiply(-1.0)) > 0) {
+		if (r.multiply(ray.getDirection()) > 0) {
 			// Material
 			double m = 20;
 			// (1,1,1)

@@ -37,6 +37,11 @@ public class SphereNode extends Node {
 	private int resolution;
 
 	/**
+	 * The level of reflection between 0 and 1.
+	 */
+	private double reflectionLevel;
+
+	/**
 	 * Constructor.
 	 */
 	public SphereNode(double radius, int resolution) {
@@ -54,6 +59,16 @@ public class SphereNode extends Node {
 		this.center = center;
 		this.colour = colour;
 		customCenter = true;
+	}
+
+	public SphereNode(double radius, int resolution, Vector3 center,
+			Vector3 colour, double reflectionLevel) {
+		this.radius = radius;
+		this.resolution = resolution;
+		this.center = center;
+		this.colour = colour;
+		customCenter = true;
+		this.reflectionLevel = reflectionLevel;
 	}
 
 	@Override
@@ -79,8 +94,9 @@ public class SphereNode extends Node {
 				.multiply(ray.getDirection())))
 				/ ray.getDirection().multiply(ray.getDirection());
 		double q = (ray.getPoint().multiply(ray.getPoint()) - 2
-				* ray.getPoint().multiply(center) + center.multiply(center)
-				- radius * radius) / ray.getDirection().multiply(ray.getDirection());
+				* ray.getPoint().multiply(center) + center.multiply(center) - radius
+				* radius)
+				/ ray.getDirection().multiply(ray.getDirection());
 		double lambda1 = -p / 2 + Math.sqrt(p * p / 4 - q);
 		double lambda2 = -p / 2 - Math.sqrt(p * p / 4 - q);
 		double lambda = (lambda1 > 0) ? ((lambda2 > 0) ? Math.min(lambda1,
@@ -95,6 +111,7 @@ public class SphereNode extends Node {
 			normal.normalize();
 			result.normal = normal;
 			result.colour = colour;
+			result.reflectionLevel = reflectionLevel;
 			return result;
 		}
 		return null;

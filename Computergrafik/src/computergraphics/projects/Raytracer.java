@@ -119,15 +119,17 @@ public class Raytracer {
 				results.add(intersection);
 			}
 		}
+		Vector3 colour = new Vector3();
 		if (!results.isEmpty()) {
 			Comparator<IntersectionResult> com = new ResultComparator();
 			Collections.sort(results, com);
 			IntersectionResult result = results.get(0);
 			if (!shadow(result)) {
-				return light(result, ray);
+				colour = light(result, ray);
 			}
+			colour = colour.add(result.colour.multiply(0.1));
 		}
-		return new Vector3(0, 0, 0);
+		return colour;
 	}
 
 	/**

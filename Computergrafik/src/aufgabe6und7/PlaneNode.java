@@ -38,6 +38,7 @@ public class PlaneNode extends Node {
 				result.normal = normal;
 				result.point = intersection;
 				result.object = this;
+				result.reflectionLevel = 0.3;
 
 				// calc the colour
 				double i = 1.0;

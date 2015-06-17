@@ -25,13 +25,13 @@ public class Aufgabe7 {
 
 		// red
 		SphereNode sphere1 = new SphereNode(0.5, 20, new Vector3(0, 0.5, -2),
-				new Vector3(1, 0, 0));
+				new Vector3(1, 0, 0), 0.0);
 		// blue
 		SphereNode sphere2 = new SphereNode(0.5, 20, new Vector3(2, -1, -2),
-				new Vector3(0, 0, 1));
+				new Vector3(0, 0, 1), 0.5);
 		// green
 		SphereNode sphere3 = new SphereNode(0.5, 20, new Vector3(-2, -0.5, -2),
-				new Vector3(0, 1, 0));
+				new Vector3(0, 1, 0), 1.0);
 		Vector3 normal = new Vector3(0, 1, -0.1);
 		PlaneNode plane = new PlaneNode(new Vector3(0, -2, 0),
 				normal.getNormalized(), new Vector3(1, 0, 1));

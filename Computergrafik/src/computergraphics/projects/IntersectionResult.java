@@ -8,23 +8,28 @@ import computergraphics.scenegraph.Node;
  */
 public class IntersectionResult {
 
-  /**
-   * The intersection happens at this point.
-   */
-  public Vector3 point;
+	/**
+	 * The intersection happens at this point.
+	 */
+	public Vector3 point;
 
-  /**
-   * Normal at the given point.
-   */
-  public Vector3 normal;
+	/**
+	 * Normal at the given point.
+	 */
+	public Vector3 normal;
 
-  /**
-   * Intersected object
-   */
-  public Node object;
-  
-  /**
-   * The colour
-   */
-  public Vector3 colour;
+	/**
+	 * Intersected object
+	 */
+	public Node object;
+
+	/**
+	 * The colour
+	 */
+	public Vector3 colour;
+
+	/**
+	 * The level of reflection between 0 and 1.
+	 */
+	public double reflectionLevel;
 }

@@ -152,10 +152,8 @@ public class Raytracer {
 	}
 
 	/**
-	 * 
-	 * @param result
-	 * @param ray
-	 * @return
+	 * Vectoren sind verkehrt herum. Deshalb sind die if Abfragen verkehrt
+	 * herum.
 	 */
 	private Vector3 light(IntersectionResult result, Ray3D ray) {
 		// Vector vom Schnittpunkt zur Lichtquelle
@@ -166,23 +164,26 @@ public class Raytracer {
 		if (l.multiply(n) > 0) {
 			return new Vector3();
 		}
-		// R ist ... ??? !!!
-		Vector3 r = l.subtract((n.multiply(l.multiply(n) * 2)));
-		r.normalize();
-		// Material
-		double m = 20;
-		// (1,1,1)
-		Vector3 one = new Vector3(1.0, 1.0, 1.0);
+
+		// diffuser Anteil
 		// (N*L)*Objectfarbe
 		Vector3 colourDiff = result.object.getColour().multiply(
 				n.multiply(l) * (-1));
-		// (R*(-Vs))^m * (1,1,1)
-		// if (r.multiply(ray.getDirection().multiply(-1.0)) < 0) {
-		// return new Vector3();
-		// }
-		Vector3 colourSpec = one.multiply(Math.pow(
-				r.multiply(ray.getDirection().multiply(-1.0)), m));
 
+		// spekulaerer Anteil
+		Vector3 colourSpec = new Vector3();
+		// R ist ... ??? !!!
+		Vector3 r = l.subtract((n.multiply(l.multiply(n) * 2)));
+		r.normalize();
+		if (r.multiply(ray.getDirection().multiply(-1.0)) > 0) {
+			// Material
+			double m = 20;
+			// (1,1,1)
+			Vector3 one = new Vector3(1.0, 1.0, 1.0);
+			// (R*(-Vs))^m * (1,1,1)
+			colourSpec = one.multiply(Math.pow(
+					r.multiply(ray.getDirection().multiply(-1.0)), m));
+		}
 		// Summe des diffusen Lichts und dem spekularen Licht
 		return colourDiff.add(colourSpec);
 	}

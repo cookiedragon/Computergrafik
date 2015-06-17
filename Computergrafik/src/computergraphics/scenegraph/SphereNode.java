@@ -94,6 +94,7 @@ public class SphereNode extends Node {
 			Vector3 normal = intersection.subtract(center);
 			normal.normalize();
 			result.normal = normal;
+			result.colour = colour;
 			return result;
 		}
 		return null;

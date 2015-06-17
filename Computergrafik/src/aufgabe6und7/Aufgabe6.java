@@ -23,16 +23,18 @@ public class Aufgabe6 {
 	public static void main(String[] args) {
 		GroupNode rootNode = new GroupNode();
 
-		SphereNode sphere1 = new SphereNode(0.25, 20, new Vector3(0, 1, 0),
+		// red
+		SphereNode sphere1 = new SphereNode(0.5, 20, new Vector3(0, 0.5, -2),
 				new Vector3(1, 0, 0));
-		SphereNode sphere2 = new SphereNode(0.25, 20, new Vector3(0, 0, 0),
+		// blue
+		SphereNode sphere2 = new SphereNode(0.5, 20, new Vector3(2, -1, -2),
 				new Vector3(0, 0, 1));
-		SphereNode sphere3 = new SphereNode(0.25, 20, new Vector3(-1, 0, 0),
+		// green
+		SphereNode sphere3 = new SphereNode(0.5, 20, new Vector3(-2, -0.5, -2),
 				new Vector3(0, 1, 0));
 		Vector3 normal = new Vector3(0, 1, -0.1);
-		normal.normalize();
-		PlaneNode plane = new PlaneNode(new Vector3(0, -1, 0), normal,
-				new Vector3(0, 0, 1));
+		PlaneNode plane = new PlaneNode(new Vector3(0, -2, 0),
+				normal.getNormalized(), new Vector3(1, 0, 1));
 
 		rootNode.addChild(sphere1);
 		rootNode.addChild(sphere2);

@@ -151,11 +151,8 @@ public class Raytracer {
 		return shadow;
 	}
 
-	/**
-	 * Vectoren sind verkehrt herum. Deshalb sind die if Abfragen verkehrt
-	 * herum.
-	 */
 	private Vector3 light(IntersectionResult result, Ray3D ray) {
+
 		// Vector vom Schnittpunkt zur Lichtquelle
 		Vector3 l = light.subtract(result.point);
 		l.normalize();
@@ -167,11 +164,11 @@ public class Raytracer {
 
 		// diffuser Anteil
 		// (N*L)*Objectfarbe
-		Vector3 colourDiff = result.object.getColour().multiply(n.multiply(l));
+		Vector3 colourDiff = result.colour.multiply(n.multiply(l));
 
 		// spekulaerer Anteil
 		Vector3 colourSpec = new Vector3();
-		// R ist ... ??? !!!
+		// R ist Reflektion vom Schnittpunkt zurueck zum Augpunkt
 		Vector3 r = l.subtract((n.multiply(l.multiply(n) * 2)));
 		if (r.multiply(ray.getDirection()) > 0) {
 			// Material
@@ -193,10 +190,10 @@ public class Raytracer {
 			double z1 = o1.point.get(2);
 			double z2 = o2.point.get(2);
 			if (z1 < z2) {
-				return -1;
+				return 1;
 			}
 			if (z1 > z2) {
-				return 1;
+				return -1;
 			}
 			return 0;
 		}

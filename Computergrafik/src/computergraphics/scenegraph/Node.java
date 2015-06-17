@@ -69,13 +69,4 @@ public abstract class Node {
 	public IntersectionResult intersection(Ray3D ray) {
 		return null;
 	}
-
-	/**
-	 * Get the colour of the node.
-	 * 
-	 * @return the colour
-	 */
-	public Vector3 getColour() {
-		return colour;
-	}
 }

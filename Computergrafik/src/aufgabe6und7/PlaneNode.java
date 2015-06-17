@@ -1,7 +1,6 @@
 package aufgabe6und7;
 
 import com.jogamp.opengl.GL2;
-
 import computergraphics.math.Vector3;
 import computergraphics.projects.IntersectionResult;
 import computergraphics.projects.Ray3D;
@@ -39,6 +38,29 @@ public class PlaneNode extends Node {
 				result.normal = normal;
 				result.point = intersection;
 				result.object = this;
+
+				// calc the colour
+				double i = 1.0;
+				Vector3 assi = new Vector3(i, i, i).getNormalized();
+
+				Vector3 one = normal.cross(assi).getNormalized();
+				Vector3 two = normal.cross(one).getNormalized();
+
+				double u = one.multiply(intersection);
+				double v = two.multiply(intersection);
+
+				if (u < 0) {
+					u = -u;
+				}
+				if (v < 0) {
+					v = -v;
+				}
+
+				if (((int) u) % 2 == ((int) v) % 2) {
+					result.colour = new Vector3(1, 1, 0);
+				} else {
+					result.colour = colour;
+				}
 				return result;
 			}
 		}

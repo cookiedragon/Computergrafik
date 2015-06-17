@@ -22,4 +22,9 @@ public class IntersectionResult {
    * Intersected object
    */
   public Node object;
+  
+  /**
+   * The colour
+   */
+  public Vector3 colour;
 }

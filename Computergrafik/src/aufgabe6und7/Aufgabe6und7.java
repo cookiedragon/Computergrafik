@@ -2,7 +2,7 @@
  * Praktikum AI WP Computergrafik, SS 2015
  * Gruppe:	Corinna Klaukin (corinna.klaukin@haw-hamburg.de)
  * 			Anna Steinhauer (annachristin.steinhauer@haw-hamburg.de)
- * Aufgabe: Aufgabenblatt 6
+ * Aufgabe: Aufgabenblatt 7
  */
 package aufgabe6und7;
 
@@ -15,7 +15,7 @@ import computergraphics.projects.Raytracer;
 import computergraphics.scenegraph.GroupNode;
 import computergraphics.scenegraph.SphereNode;
 
-public class Aufgabe6 {
+public class Aufgabe6und7 {
 
 	/**
 	 * Program entry point.
@@ -23,16 +23,18 @@ public class Aufgabe6 {
 	public static void main(String[] args) {
 		GroupNode rootNode = new GroupNode();
 
-		SphereNode sphere1 = new SphereNode(0.25, 20, new Vector3(0, 1, 0),
-				new Vector3(1, 0, 0));
-		SphereNode sphere2 = new SphereNode(0.25, 20, new Vector3(0, 0, 0),
-				new Vector3(0, 0, 1));
-		SphereNode sphere3 = new SphereNode(0.25, 20, new Vector3(-1, 0, 0),
-				new Vector3(0, 1, 0));
+		// red
+		SphereNode sphere1 = new SphereNode(0.5, 20, new Vector3(0, 0.5, -2),
+				new Vector3(1, 0, 0), 0.8);
+		// blue
+		SphereNode sphere2 = new SphereNode(0.5, 20, new Vector3(2, -1, -2),
+				new Vector3(0, 0, 1), 0.5);
+		// green
+		SphereNode sphere3 = new SphereNode(0.5, 20, new Vector3(-2, -0.5, -2),
+				new Vector3(0, 1, 0), 0.2);
 		Vector3 normal = new Vector3(0, 1, -0.1);
-		normal.normalize();
-		PlaneNode plane = new PlaneNode(new Vector3(0, -1, 0), normal,
-				new Vector3(0, 0, 1));
+		PlaneNode plane = new PlaneNode(new Vector3(0, -2, 0),
+				normal.getNormalized(), new Vector3(1, 0, 1));
 
 		rootNode.addChild(sphere1);
 		rootNode.addChild(sphere2);

@@ -39,7 +39,7 @@ public class SphereNode extends Node {
 	/**
 	 * The level of reflection between 0 and 1.
 	 */
-	private double reflectionLevel;
+	private double reflectionLevel = 0.0;
 
 	/**
 	 * Constructor.

@@ -124,10 +124,26 @@ public class Raytracer {
 			Comparator<IntersectionResult> com = new ResultComparator();
 			Collections.sort(results, com);
 			IntersectionResult result = results.get(0);
-			if (!shadow(result)) {
-				colour = light(result, ray);
+
+			// calc the colour at this point
+			colour = light(result, ray);
+
+			// get reflected colour
+			if (result.reflectionLevel > 0 && recursion < 5) {
+				Vector3 newDirection = result.point.subtract(result.normal
+						.multiply(2 * result.point.multiply(result.normal)));
+				Vector3 tracedColour = trace(new Ray3D(result.point,
+						newDirection), recursion + 1);
+				if (!tracedColour.equals(new Vector3())) {
+					colour = colour.multiply(1 - result.reflectionLevel).add(
+							tracedColour.multiply(result.reflectionLevel));
+				}
 			}
-			colour = colour.add(result.colour.multiply(0.1));
+
+			// if in shadow, make it dark
+			if (shadow(result)) {
+				colour = colour.multiply(0.1);
+			}
 		}
 		return colour;
 	}
@@ -156,8 +172,7 @@ public class Raytracer {
 	private Vector3 light(IntersectionResult result, Ray3D ray) {
 
 		// Vector vom Schnittpunkt zur Lichtquelle
-		Vector3 l = light.subtract(result.point);
-		l.normalize();
+		Vector3 l = light.subtract(result.point).getNormalized();
 		// Oberflaechennormale
 		Vector3 n = result.normal;
 		if (n.multiply(l) < 0) {
@@ -171,7 +186,7 @@ public class Raytracer {
 		// spekulaerer Anteil
 		Vector3 colourSpec = new Vector3();
 		// R ist Reflektion vom Schnittpunkt zurueck zum Augpunkt
-		Vector3 r = l.subtract((n.multiply(l.multiply(n) * 2)));
+		Vector3 r = l.subtract((n.multiply(l.multiply(n) * 2))).getNormalized();
 		if (r.multiply(ray.getDirection()) > 0) {
 			// Material
 			double m = 20;
@@ -179,7 +194,8 @@ public class Raytracer {
 			Vector3 one = new Vector3(1.0, 1.0, 1.0);
 			// (R*(-Vs))^m * (1,1,1)
 			colourSpec = one.multiply(Math.pow(
-					r.multiply(ray.getDirection().multiply(-1.0)), m));
+					r.multiply(ray.getDirection().multiply(-1.0)
+							.getNormalized()), m));
 		}
 		// Summe des diffusen Lichts und dem spekularen Licht
 		return colourDiff.add(colourSpec);

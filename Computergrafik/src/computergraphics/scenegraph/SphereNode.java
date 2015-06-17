@@ -78,9 +78,9 @@ public class SphereNode extends Node {
 		double p = (2 * ray.getPoint().multiply(ray.getDirection()) - (2 * center
 				.multiply(ray.getDirection())))
 				/ ray.getDirection().multiply(ray.getDirection());
-		double q = ray.getPoint().multiply(ray.getPoint()) - 2
+		double q = (ray.getPoint().multiply(ray.getPoint()) - 2
 				* ray.getPoint().multiply(center) + center.multiply(center)
-				- radius * radius;
+				- radius * radius) / ray.getDirection().multiply(ray.getDirection());
 		double lambda1 = -p / 2 + Math.sqrt(p * p / 4 - q);
 		double lambda2 = -p / 2 - Math.sqrt(p * p / 4 - q);
 		double lambda = (lambda1 > 0) ? ((lambda2 > 0) ? Math.min(lambda1,

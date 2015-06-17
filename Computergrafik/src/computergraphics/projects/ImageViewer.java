@@ -24,6 +24,7 @@ public class ImageViewer extends JFrame {
     label.setIcon(new ImageIcon(image));
     getContentPane().add(label);
 
+    setDefaultCloseOperation(EXIT_ON_CLOSE);
     setLocation(100, 300);
     setSize(image.getWidth(null), image.getHeight(null));
     setVisible(true);

@@ -31,7 +31,7 @@ public class Aufgabe6 {
 				new Vector3(0, 1, 0));
 		Vector3 normal = new Vector3(0, 1, -0.1);
 		normal.normalize();
-		PlaneNode plane = new PlaneNode(new Vector3(0, -2, 0), normal,
+		PlaneNode plane = new PlaneNode(new Vector3(0, -1, 0), normal,
 				new Vector3(0, 0, 1));
 
 		rootNode.addChild(sphere1);

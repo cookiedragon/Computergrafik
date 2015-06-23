@@ -27,7 +27,7 @@ public class Aufgabe6und7 {
 		SphereNode sphere1 = new SphereNode(0.5, 20, new Vector3(0, 0.5, -2),
 				new Vector3(1, 0, 0), 0.8);
 		// blue
-		SphereNode sphere2 = new SphereNode(0.5, 20, new Vector3(2, -1, -2),
+		SphereNode sphere2 = new SphereNode(0.5, 20, new Vector3(2, -1, -1),
 				new Vector3(0, 0, 1), 0.5);
 		// green
 		SphereNode sphere3 = new SphereNode(0.5, 20, new Vector3(-2, -0.5, -2),
@@ -42,7 +42,7 @@ public class Aufgabe6und7 {
 		rootNode.addChild(sphere3);
 
 		Raytracer raytracer = new Raytracer(new Camera(), rootNode);
-		Image image = raytracer.render(640, 480);
+		Image image = raytracer.render(800, 600);
 		new ImageViewer(image);
 	}
 }

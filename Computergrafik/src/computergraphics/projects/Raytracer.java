@@ -132,8 +132,15 @@ public class Raytracer {
 			if (result.reflectionLevel > 0 && recursion < 5) {
 				Vector3 newDirection = result.point.subtract(result.normal
 						.multiply(2 * result.point.multiply(result.normal)));
-				Vector3 tracedColour = trace(new Ray3D(result.point,
-						newDirection), recursion + 1);
+				// Vector3 newDirection = ray
+				// .getDirection()
+				// .multiply(-1)
+				// .subtract(
+				// result.normal.multiply(2 * ray.getDirection()
+				// .multiply(result.normal)));
+				Vector3 newPoint = result.point.add(newDirection.multiply(0.1));
+				Vector3 tracedColour = trace(new Ray3D(newPoint, newDirection),
+						recursion + 1);
 				if (!tracedColour.equals(new Vector3())) {
 					colour = colour.multiply(1 - result.reflectionLevel).add(
 							tracedColour.multiply(result.reflectionLevel));

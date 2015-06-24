@@ -51,10 +51,10 @@ public class PlaneNode extends Node {
 				double v = two.multiply(intersection);
 
 				if (u < 0) {
-					u = -u;
+					u = -u + 1;
 				}
 				if (v < 0) {
-					v = -v;
+					v = -v + 1;
 				}
 
 				if (((int) u) % 2 == ((int) v) % 2) {

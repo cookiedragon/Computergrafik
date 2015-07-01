@@ -1,6 +1,9 @@
 package aufgabe6und7;
 
+import java.util.Random;
+
 import com.jogamp.opengl.GL2;
+
 import computergraphics.math.Vector3;
 import computergraphics.projects.IntersectionResult;
 import computergraphics.projects.Ray3D;
@@ -41,8 +44,11 @@ public class PlaneNode extends Node {
 				result.reflectionLevel = 0.5;
 
 				// calc the colour
-				double i = 1.0;
-				Vector3 assi = new Vector3(i, i, i).getNormalized();
+				Vector3 assi;
+				do {
+					double i = (new Random()).nextDouble();
+					assi = new Vector3(i, i, i).getNormalized();
+				} while (assi.equals(new Vector3()));
 
 				Vector3 one = normal.cross(assi).getNormalized();
 				Vector3 two = normal.cross(one).getNormalized();
